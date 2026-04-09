@@ -30,7 +30,10 @@ The target chapter module contains:
 - Every included practice item must be answerable from `1-3` support cards in the same chapter.
 - Support cards must contain the needed facts before the practice item is finalized: `Время`, `Место`, `Участники`, and the main event meaning are the default minimum; add `Причины` and `Итоги` when needed.
 - If required names, dates, places, institutions, or terms are missing from the current support cards, enrich the cards first.
-- Source answer instructions should be preserved unless they are duplicated verbatim by the interactive control label or prompt; if duplicated, show the instruction only once.
+- Apply this explicit check before finalizing any practice item: `Can I answer this from the cards without guessing?` If the honest answer is no, the support cards are still incomplete and must be enriched first.
+- Learner-facing practice titles, section headers, and helper labels must not reveal the correct answer before the learner interacts with the item.
+- Source answer instructions should be preserved unless they duplicate the learner action already shown in the interactive control.
+- If the same task would otherwise appear in both the source block and the interactive prompt, keep the concise action phrase in the interactive prompt and trim the repeated instruction from the learner-facing source block.
 - Visible support-card layout in this repo: first block combines `Время`, `Место`, and `Участники` into short text lines with labels; second block contains paragraph sections `Главное`, then optional `Причины`, `Итоги`.
 
 ## Workflow
@@ -40,10 +43,12 @@ The target chapter module contains:
 3. Build the opening chronological summary from the textbook chapter.
 4. Build chronological support cards from the textbook chapter.
 5. Map each practice item to `1-3` support cards and enrich those cards if coverage is weak.
-6. Transform control-work tasks into practice items using the branch rules below.
-7. Store source metadata for every practice item, but do not show that metadata in the learner UI.
-8. Present practice items in shuffled order to the learner.
-9. Run validation and fix coverage, ordering, and rendering gaps.
+6. For each mapped item, ask: `Can I answer this from the cards without guessing?` If not, improve the support cards before keeping the item.
+7. Transform control-work tasks into practice items using the branch rules below.
+8. Check the learner-facing title and visible headers of each practice item and remove any wording that gives away the answer.
+9. Store source metadata for every practice item, but do not show that metadata in the learner UI.
+10. Present practice items in shuffled order to the learner.
+11. Run validation and fix coverage, ordering, and rendering gaps.
 
 ## Practice conversion rules
 
@@ -55,6 +60,8 @@ The target chapter module contains:
 ### Long-answer control-work tasks
 - A numbered long-answer task may become more than one practice item.
 - Split it into atomic answerable checks only after preserving the original full source block.
+- If one source task is split into several practice items, keep the shared context or excerpt, but replace the original multi-question ending with only the one question that belongs to the current derived item.
+- Remove sibling questions from the learner-facing text of that derived item so the card does not suggest that the learner must answer prompts that are not part of the current interaction.
 - Prefer bounded `single_choice` or `multi_select_exact_n` interactions.
 - If any fragment cannot be bounded safely, stop and ask the user before finalizing that fragment.
 - Do not silently skip the fragment and do not guess.
@@ -111,7 +118,9 @@ The target chapter module contains:
 - Generated options are marked with `*`.
 
 ### Compare-and-contrast
-- Preserve the original compare stem and table headings.
+- Preserve the compare topic, but remove learner-facing scaffolding that is no longer part of the transformed task.
+- If the original wording asks the learner to formulate criteria and the converted card does not actually require free-form criteria creation, omit that instruction.
+- Remove blank comparison tables when they are no longer being filled directly by the learner.
 - Split into bounded common-feature and difference items where possible.
 - Generated criteria are always marked with `*`.
 
@@ -127,6 +136,11 @@ The target chapter module contains:
 - The chapter summary is chronological and collapsed by default.
 - Support cards are chronological.
 - Every included practice item has `1-3` support cards with enough facts to answer it.
+- Every included practice item passes the check: `Can I answer this from the cards without guessing?`
+- No learner-facing practice title, header, or label reveals the correct answer before interaction.
+- No derived practice card shows leftover sibling questions from the same split source task.
+- No derived compare-and-contrast card keeps empty tables or obsolete instructions about formulating comparison criteria.
+- No learner-facing card repeats the same task instruction in both the source block and the interactive prompt; when deduplication is needed, the interactive prompt keeps the action phrase.
 - Practice metadata retains source order internally.
 - Practice is shuffled in the learner UI.
 - No learner-facing practice card shows source badges.
