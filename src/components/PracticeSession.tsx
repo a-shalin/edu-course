@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
+import type { BookTarget } from "@/lib/book-data";
 import type {
   GuidedSubtask,
   MarkedText,
@@ -261,6 +262,28 @@ function ExplanationCard({
   );
 }
 
+function BookTargetButton({
+  target,
+  onOpen,
+}: {
+  target?: BookTarget;
+  onOpen?: (target: BookTarget) => void;
+}) {
+  if (!target || !onOpen) {
+    return null;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(target)}
+      className="rounded-full border border-accent/30 bg-accent/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-colors hover:bg-accent/14"
+    >
+      Открыть в учебнике
+    </button>
+  );
+}
+
 function isCorrectMultiSelect(part: Extract<PracticePart, { interaction: "multi_select_exact_n" }>, response?: PartResponse) {
   if (!response?.submitted || !response.selectedMany) {
     return false;
@@ -276,10 +299,14 @@ function SingleChoicePart({
   part,
   response,
   onSelect,
+  bookTarget,
+  onOpenBookTarget,
 }: {
   part: Extract<PracticePart, { interaction: "single_choice" }>;
   response?: PartResponse;
   onSelect: (label: string) => void;
+  bookTarget?: BookTarget;
+  onOpenBookTarget?: (target: BookTarget) => void;
 }) {
   const answered = Boolean(response?.selected);
   const selected = response?.selected;
@@ -319,6 +346,7 @@ function SingleChoicePart({
             title={isCorrect ? "Верно" : `Неверно — правильный ответ: ${part.correctAnswer}`}
             body={part.explanation}
           />
+          <BookTargetButton target={bookTarget} onOpen={onOpenBookTarget} />
           {part.distractorExplanations ? (
             <div className="space-y-2">
               {Object.entries(part.distractorExplanations).map(([label, text]) => (
@@ -342,11 +370,15 @@ function MultiSelectPart({
   response,
   onToggle,
   onSubmit,
+  bookTarget,
+  onOpenBookTarget,
 }: {
   part: Extract<PracticePart, { interaction: "multi_select_exact_n" }>;
   response?: PartResponse;
   onToggle: (label: string) => void;
   onSubmit: () => void;
+  bookTarget?: BookTarget;
+  onOpenBookTarget?: (target: BookTarget) => void;
 }) {
   const selected = response?.selectedMany ?? [];
   const submitted = Boolean(response?.submitted);
@@ -405,6 +437,7 @@ function MultiSelectPart({
             title={correct ? "Верно" : "Нужно было выбрать другой набор пунктов"}
             body={part.explanation}
           />
+          <BookTargetButton target={bookTarget} onOpen={onOpenBookTarget} />
           {part.optionExplanations ? (
             <div className="space-y-2">
               {Object.entries(part.optionExplanations).map(([label, text]) => (
@@ -453,10 +486,14 @@ function GuidedSubtasksPart({
   part,
   revealed,
   onReveal,
+  bookTarget,
+  onOpenBookTarget,
 }: {
   part: Extract<PracticePart, { interaction: "guided_subtasks" }>;
   revealed: boolean;
   onReveal: () => void;
+  bookTarget?: BookTarget;
+  onOpenBookTarget?: (target: BookTarget) => void;
 }) {
   return (
     <div className="space-y-4 rounded-[1.4rem] border border-border/90 bg-card px-5 py-5 shadow-[0_10px_30px_rgba(59,37,26,0.06)]">
@@ -485,6 +522,7 @@ function GuidedSubtasksPart({
               <GuidedSubtaskCard key={subtask.id} subtask={subtask} />
             ))}
           </div>
+          <BookTargetButton target={bookTarget} onOpen={onOpenBookTarget} />
           {part.explanation ? (
             <ExplanationCard tone="neutral" title="Почему так" body={part.explanation} />
           ) : null}
@@ -498,10 +536,14 @@ function RevealAnswerPart({
   part,
   revealed,
   onReveal,
+  bookTarget,
+  onOpenBookTarget,
 }: {
   part: Extract<PracticePart, { interaction: "reveal_answer" }>;
   revealed: boolean;
   onReveal: () => void;
+  bookTarget?: BookTarget;
+  onOpenBookTarget?: (target: BookTarget) => void;
 }) {
   return (
     <div className="space-y-4 rounded-[1.4rem] border border-border/90 bg-card px-5 py-5 shadow-[0_10px_30px_rgba(59,37,26,0.06)]">
@@ -526,6 +568,7 @@ function RevealAnswerPart({
       ) : (
         <div className="space-y-3">
           <ExplanationCard tone="neutral" title="Ответ" body={part.answer} />
+          <BookTargetButton target={bookTarget} onOpen={onOpenBookTarget} />
           {part.explanation ? (
             <div className="rounded-[1rem] bg-paper px-4 py-3 text-sm leading-7 text-foreground/82">
               <MarkedInline value={part.explanation} />
@@ -604,7 +647,15 @@ function ScoreScreen({
   );
 }
 
-export function PracticeSession({ items }: { items: PracticeItem[] }) {
+export function PracticeSession({
+  items,
+  getBookTarget,
+  onOpenBookTarget,
+}: {
+  items: PracticeItem[];
+  getBookTarget?: (item: PracticeItem) => BookTarget | undefined;
+  onOpenBookTarget?: (target: BookTarget) => void;
+}) {
   const shuffleItems = (sourceItems: PracticeItem[]) => {
     const next = [...sourceItems];
 
@@ -681,6 +732,7 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
       <div className="mt-6 space-y-5">
         {currentItem.parts.map((part) => {
           const response = responses[part.id];
+          const bookTarget = getBookTarget?.(currentItem);
 
           if (part.interaction === "single_choice") {
             return (
@@ -689,6 +741,8 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
                 part={part}
                 response={response}
                 onSelect={(label) => updateResponse(part.id, { selected: label })}
+                bookTarget={bookTarget}
+                onOpenBookTarget={onOpenBookTarget}
               />
             );
           }
@@ -711,6 +765,8 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
                   updateResponse(part.id, { selectedMany: next });
                 }}
                 onSubmit={() => updateResponse(part.id, { submitted: true })}
+                bookTarget={bookTarget}
+                onOpenBookTarget={onOpenBookTarget}
               />
             );
           }
@@ -722,6 +778,8 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
                 part={part}
                 revealed={Boolean(response?.revealed)}
                 onReveal={() => updateResponse(part.id, { revealed: true })}
+                bookTarget={bookTarget}
+                onOpenBookTarget={onOpenBookTarget}
               />
             );
           }
@@ -732,6 +790,8 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
               part={part}
               revealed={Boolean(response?.revealed)}
               onReveal={() => updateResponse(part.id, { revealed: true })}
+              bookTarget={bookTarget}
+              onOpenBookTarget={onOpenBookTarget}
             />
           );
         })}
