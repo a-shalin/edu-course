@@ -1,5 +1,6 @@
 const PRACTICE_PROGRESS_VERSION = 1;
 const PRACTICE_PROGRESS_MAX_AGE = 60 * 60 * 24 * 365;
+export const PRACTICE_PROGRESS_CHANGED_EVENT = "rh9-practice-progress-changed";
 
 type PracticeProgressCookie = {
   v: number;
@@ -69,6 +70,12 @@ export function writeSolvedPracticeItemIds(chapterId: number, solvedItemIds: str
     "SameSite=Lax",
     `Max-Age=${PRACTICE_PROGRESS_MAX_AGE}`,
   ].join("; ");
+
+  window.dispatchEvent(
+    new CustomEvent(PRACTICE_PROGRESS_CHANGED_EVENT, {
+      detail: { chapterId, solvedItemIds: normalizedIds },
+    })
+  );
 }
 
 export function clearSolvedPracticeItemIds(chapterId: number): void {
@@ -82,4 +89,10 @@ export function clearSolvedPracticeItemIds(chapterId: number): void {
     "SameSite=Lax",
     "Max-Age=0",
   ].join("; ");
+
+  window.dispatchEvent(
+    new CustomEvent(PRACTICE_PROGRESS_CHANGED_EVENT, {
+      detail: { chapterId, solvedItemIds: [] },
+    })
+  );
 }

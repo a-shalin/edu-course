@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./globals.css";
 import { chapters, getReadyChapterCount, studyCards } from "@/lib/course-data";
-import { getPracticeItemCount } from "@/lib/practice";
+import {
+  getPracticeItemCount,
+  getPracticeItemsByChapter,
+  getScorablePracticeItemCount,
+} from "@/lib/practice";
+import {
+  PRACTICE_PROGRESS_CHANGED_EVENT,
+  readSolvedPracticeItemIds,
+} from "@/lib/practice-progress";
 
 function Sidebar({
   open,
@@ -16,6 +24,68 @@ function Sidebar({
   onClose: () => void;
 }) {
   const pathname = usePathname();
+  const chapterPracticeMeta = useMemo(
+    () =>
+      chapters.map((chapter) => {
+        const items = getPracticeItemsByChapter(chapter.id);
+        return {
+          chapterId: chapter.id,
+          totalCount: getScorablePracticeItemCount(items),
+          validItemIds: new Set(items.map((item) => item.id)),
+        };
+      }),
+    []
+  );
+  const [solvedCountsByChapter, setSolvedCountsByChapter] = useState<Record<number, number>>(() =>
+    Object.fromEntries(
+      chapterPracticeMeta.map(({ chapterId, validItemIds }) => {
+        const solvedCount = readSolvedPracticeItemIds(chapterId).filter((itemId) =>
+          validItemIds.has(itemId)
+        ).length;
+        return [chapterId, solvedCount];
+      })
+    )
+  );
+
+  useEffect(() => {
+    const handlePracticeProgressChanged = (
+      event: Event
+    ) => {
+      const customEvent = event as CustomEvent<{ chapterId?: number; solvedItemIds?: string[] }>;
+      const changedChapterId = customEvent.detail?.chapterId;
+
+      if (!changedChapterId) {
+        return;
+      }
+
+      const chapterMeta = chapterPracticeMeta.find(({ chapterId }) => chapterId === changedChapterId);
+
+      if (!chapterMeta) {
+        return;
+      }
+
+      const solvedCount = (customEvent.detail?.solvedItemIds ?? []).filter((itemId) =>
+        chapterMeta.validItemIds.has(itemId)
+      ).length;
+
+      setSolvedCountsByChapter((prev) => {
+        if (prev[changedChapterId] === solvedCount) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          [changedChapterId]: solvedCount,
+        };
+      });
+    };
+
+    window.addEventListener(PRACTICE_PROGRESS_CHANGED_EVENT, handlePracticeProgressChanged);
+
+    return () => {
+      window.removeEventListener(PRACTICE_PROGRESS_CHANGED_EVENT, handlePracticeProgressChanged);
+    };
+  }, [chapterPracticeMeta]);
 
   return (
     <>
@@ -48,6 +118,10 @@ function Sidebar({
             </div>
             {chapters.map((chapter) => {
               const isActive = pathname === `/chapter/${chapter.id}`;
+              const chapterProgress =
+                chapterPracticeMeta.find(({ chapterId }) => chapterId === chapter.id) ?? null;
+              const solvedCount = solvedCountsByChapter[chapter.id] ?? 0;
+              const totalCount = chapterProgress?.totalCount ?? 0;
               return (
                 <Link
                   key={chapter.id}
@@ -57,8 +131,11 @@ function Sidebar({
                     isActive ? "bg-burgundy text-white" : "text-foreground hover:bg-paper"
                   }`}
                 >
-                  <div className="mb-1 text-[11px] uppercase tracking-[0.22em] opacity-70">
-                    {chapter.label}
+                  <div className="mb-1 flex items-start justify-between gap-3 text-[11px] uppercase tracking-[0.22em] opacity-70">
+                    <span>{chapter.label}</span>
+                    <span className="shrink-0">
+                      {totalCount > 0 ? `${solvedCount}/${totalCount}` : "0/0"}
+                    </span>
                   </div>
                   <div className="line-clamp-2 leading-snug">{chapter.title}</div>
                   <div className="mt-2 text-xs opacity-70">{chapter.periodLabel}</div>
