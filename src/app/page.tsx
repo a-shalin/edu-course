@@ -1,13 +1,13 @@
 import Link from "next/link";
 import {
   chapters,
-  getExcerptsByChapter,
   getReadyChapterCount,
+  getStudyCardsByChapter,
 } from "@/lib/course-data";
 import { getPracticeItemCount, getPracticeItemsByChapter } from "@/lib/practice";
 
 function ChapterCard({ chapter }: { chapter: (typeof chapters)[number] }) {
-  const excerptCount = getExcerptsByChapter(chapter.id).length;
+  const studyCardCount = getStudyCardsByChapter(chapter.id).length;
   const practiceCount = getPracticeItemsByChapter(chapter.id).length;
   const isReady = chapter.status === "ready";
 
@@ -34,30 +34,26 @@ function ChapterCard({ chapter }: { chapter: (typeof chapters)[number] }) {
       <h2 className="mb-3 font-serif text-2xl font-bold leading-tight text-foreground transition-colors group-hover:text-accent">
         {chapter.title}
       </h2>
-      <p className="mb-5 text-sm leading-7 text-foreground/75">
-        {chapter.summary}
-      </p>
+      <p className="mb-5 text-sm leading-7 text-foreground/75">{chapter.summary}</p>
       <div className="mb-5 flex flex-wrap gap-2">
         <span className="rounded-full border border-border bg-paper px-3 py-1 text-xs text-muted">
           {chapter.periodLabel}
         </span>
         <span className="rounded-full border border-border bg-paper px-3 py-1 text-xs text-muted">
-          {excerptCount} опорных карточек
+          {studyCardCount} опорных карточек
         </span>
         <span className="rounded-full border border-border bg-paper px-3 py-1 text-xs text-muted">
-          {practiceCount} практических карточек
+          {practiceCount} вопросов
         </span>
       </div>
-      <div className="text-xs uppercase tracking-[0.18em] text-accent">
-        Открыть главу
-      </div>
+      <div className="text-xs uppercase tracking-[0.18em] text-accent">Открыть главу</div>
     </Link>
   );
 }
 
 export default function Home() {
-  const totalExcerpts = chapters.reduce(
-    (sum, chapter) => sum + getExcerptsByChapter(chapter.id).length,
+  const totalStudyCards = chapters.reduce(
+    (sum, chapter) => sum + getStudyCardsByChapter(chapter.id).length,
     0
   );
   const totalPractice = getPracticeItemCount();
@@ -76,9 +72,9 @@ export default function Home() {
               История России, 9 класс
             </h1>
             <p className="max-w-2xl text-base leading-8 text-foreground/78 lg:text-lg">
-              Курс собирает опорные карточки по учебнику и тренировочные
-              задания по контрольным работам. Первая итерация уже запускается
-              по главе о России в первой четверти XIX века.
+              Курс соединяет хронологический обзор главы, опорные карточки по учебнику и
+              практические задания по контрольным работам. Первая глава уже собрана как полный
+              учебный модуль с обзором, карточками и перемешиваемой практикой.
             </p>
           </div>
         </div>
@@ -97,29 +93,25 @@ export default function Home() {
               <div className="mt-1 text-sm text-white/72">готова</div>
             </div>
             <div>
-              <div className="font-serif text-4xl font-bold">{totalExcerpts}</div>
+              <div className="font-serif text-4xl font-bold">{totalStudyCards}</div>
               <div className="mt-1 text-sm text-white/72">карточек</div>
             </div>
             <div>
               <div className="font-serif text-4xl font-bold">{totalPractice}</div>
-              <div className="mt-1 text-sm text-white/72">практик</div>
+              <div className="mt-1 text-sm text-white/72">вопросов</div>
             </div>
           </div>
           <div className="mt-8 rounded-[1.5rem] border border-white/12 bg-white/8 p-5 text-sm leading-7 text-white/78">
-            Источники первой версии: учебник по истории России, части 1 и 2,
-            плюс тетрадь контрольных работ.
+            Для каждой готовой главы курс хранит хронологическую канву, фактические опорные
+            карточки и практику, построенную из исходных заданий.
           </div>
         </div>
       </section>
 
       <section className="mb-14">
         <div className="mb-6">
-          <div className="mb-2 text-xs uppercase tracking-[0.24em] text-muted">
-            Структура
-          </div>
-          <h2 className="font-serif text-3xl font-bold text-foreground">
-            Главы курса
-          </h2>
+          <div className="mb-2 text-xs uppercase tracking-[0.24em] text-muted">Структура</div>
+          <h2 className="font-serif text-3xl font-bold text-foreground">Главы курса</h2>
         </div>
         <div className="grid gap-5 lg:grid-cols-2">
           {chapters.map((chapter) => (
@@ -130,30 +122,22 @@ export default function Home() {
 
       <section className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-[1.8rem] border border-border bg-card p-7 shadow-[0_20px_60px_rgba(59,37,26,0.08)]">
-          <div className="mb-3 text-xs uppercase tracking-[0.24em] text-muted">
-            Как устроен MVP
-          </div>
-          <h3 className="mb-4 font-serif text-2xl font-bold text-foreground">
-            Один вертикальный срез
-          </h3>
+          <div className="mb-3 text-xs uppercase tracking-[0.24em] text-muted">Как устроен курс</div>
+          <h3 className="mb-4 font-serif text-2xl font-bold text-foreground">Глава как модуль</h3>
           <p className="text-sm leading-7 text-foreground/78">
-            Сейчас полностью заполнена только первая глава: восемь карточек с
-            ключевыми фактами и несколько практических карточек, построенных
-            вокруг исходной структуры заданий.
+            Каждая готовая глава начинается со скрытого по умолчанию обзора по датам, затем идут
+            опорные карточки в хронологическом порядке, а после них — практические вопросы,
+            построенные по заданиям контрольной работы.
           </p>
         </div>
 
         <div className="rounded-[1.8rem] border border-border bg-card p-7 shadow-[0_20px_60px_rgba(59,37,26,0.08)]">
-          <div className="mb-3 text-xs uppercase tracking-[0.24em] text-muted">
-            Следующий шаг
-          </div>
-          <h3 className="mb-4 font-serif text-2xl font-bold text-foreground">
-            Итеративное расширение
-          </h3>
+          <div className="mb-3 text-xs uppercase tracking-[0.24em] text-muted">Следующий шаг</div>
+          <h3 className="mb-4 font-serif text-2xl font-bold text-foreground">Повторение структуры</h3>
           <p className="text-sm leading-7 text-foreground/78">
-            После проверки этого запуска структура будет повторяться для
-            следующих глав: опорные карточки по учебнику, тренировочные
-            задания из контрольных работ и пояснения к правильным ответам.
+            Следующие главы будут собираться по той же схеме: полный набор практических заданий,
+            опорные карточки с фактами для ответа и общий обзор главы, чтобы сохранялась единая
+            логика изучения материала.
           </p>
         </div>
       </section>

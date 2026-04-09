@@ -1,9 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { PracticeSession } from "@/components/PracticeSession";
-import { getChapter, getExcerptsByChapter } from "@/lib/course-data";
+import {
+  getChapter,
+  getChapterSummaryByChapter,
+  getStudyCardsByChapter,
+  type StudyCard,
+} from "@/lib/course-data";
 import { getPracticeItemsByChapter } from "@/lib/practice";
 
 function InlineFactSummary({
@@ -21,7 +27,7 @@ function InlineFactSummary({
     participants && participants.length > 0
       ? { label: "Участники", value: participants.join(", ") }
       : null,
-  ].filter(Boolean);
+  ].filter(Boolean) as { label: string; value: string }[];
 
   if (facts.length === 0) {
     return null;
@@ -29,8 +35,8 @@ function InlineFactSummary({
 
   return (
     <div className="rounded-[1rem] border border-border bg-paper px-4 py-4 text-sm leading-7 text-foreground/82">
-      {facts.map((fact, index) => (
-        <p key={index}>
+      {facts.map((fact) => (
+        <p key={fact.label}>
           <span className="font-semibold text-foreground">{fact.label}:</span>{" "}
           {fact.value}
         </p>
@@ -60,24 +66,12 @@ function DetailParagraph({
   );
 }
 
-function ExcerptCard({
+function StudyCardView({
   index,
-  title,
-  time,
-  place,
-  participants,
-  essence,
-  causes,
-  results,
+  card,
 }: {
   index: number;
-  title: string;
-  time?: string;
-  place?: string;
-  participants?: string[];
-  essence: string;
-  causes?: string;
-  results?: string;
+  card: StudyCard;
 }) {
   return (
     <article className="rounded-[1.6rem] border border-border/90 bg-card p-6 shadow-[0_20px_60px_rgba(59,37,26,0.08)]">
@@ -86,24 +80,83 @@ function ExcerptCard({
           {index}
         </div>
         <div>
-          <h3 className="font-serif text-xl font-bold text-foreground">
-            {title}
-          </h3>
+          <h3 className="font-serif text-xl font-bold text-foreground">{card.title}</h3>
         </div>
       </div>
 
       <InlineFactSummary
-        time={time}
-        place={place}
-        participants={participants}
+        time={card.time}
+        place={card.place}
+        participants={card.participants}
       />
 
+      {card.visual ? (
+        <figure className="mt-4 overflow-hidden rounded-[1rem] border border-border bg-paper p-4">
+          <Image
+            src={card.visual.src}
+            alt={card.visual.alt}
+            width={card.visual.width}
+            height={card.visual.height}
+            className="w-full rounded-[0.8rem] border border-border/70 object-contain"
+          />
+          {card.visual.caption ? (
+            <figcaption className="mt-3 text-xs leading-6 text-muted">
+              {card.visual.caption}
+            </figcaption>
+          ) : null}
+        </figure>
+      ) : null}
+
       <div className="mt-4 rounded-[1rem] border border-border bg-paper px-4 py-4">
-        <DetailParagraph label="Главное" value={essence} />
-        <DetailParagraph label="Причины" value={causes} />
-        <DetailParagraph label="Итоги" value={results} />
+        <DetailParagraph label="Главное" value={card.essence} />
+        <DetailParagraph label="Причины" value={card.causes} />
+        <DetailParagraph label="Итоги" value={card.results} />
       </div>
     </article>
+  );
+}
+
+function ChapterSummary({
+  entries,
+}: {
+  entries: ReturnType<typeof getChapterSummaryByChapter>;
+}) {
+  if (entries.length === 0) {
+    return null;
+  }
+
+  return (
+    <details className="group mb-14 overflow-hidden rounded-[1.8rem] border border-border bg-card shadow-[0_20px_60px_rgba(59,37,26,0.08)]">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 marker:content-none lg:px-8">
+        <div>
+          <div className="mb-1 text-xs uppercase tracking-[0.24em] text-muted">
+            Обзор главы
+          </div>
+          <h3 className="font-serif text-2xl font-bold text-foreground">
+            Хронологическая канва
+          </h3>
+        </div>
+        <div className="flex items-center gap-3 text-sm text-muted">
+          <span>{entries.length} ключевых вех</span>
+          <span className="text-xl transition-transform group-open:rotate-45">+</span>
+        </div>
+      </summary>
+      <div className="border-t border-border bg-paper px-6 py-6 lg:px-8">
+        <div className="space-y-5">
+          {entries.map((entry) => (
+            <div key={entry.id} className="rounded-[1.2rem] border border-border/80 bg-card px-4 py-4">
+              <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                {entry.dateLabel}
+              </div>
+              <h4 className="mb-2 font-serif text-lg font-bold text-foreground">
+                {entry.title}
+              </h4>
+              <p className="text-sm leading-7 text-foreground/80">{entry.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </details>
   );
 }
 
@@ -125,7 +178,8 @@ export default function ChapterPage() {
     );
   }
 
-  const excerpts = getExcerptsByChapter(chapter.id);
+  const summaryEntries = getChapterSummaryByChapter(chapter.id);
+  const studyCards = getStudyCardsByChapter(chapter.id);
   const practiceItems = getPracticeItemsByChapter(chapter.id);
 
   return (
@@ -170,6 +224,8 @@ export default function ChapterPage() {
 
       {chapter.status === "ready" ? (
         <>
+          <ChapterSummary entries={summaryEntries} />
+
           <section className="mb-14">
             <div className="mb-6 flex items-end justify-between gap-4">
               <div>
@@ -181,22 +237,12 @@ export default function ChapterPage() {
                 </h3>
               </div>
               <div className="text-sm text-muted">
-                {excerpts.length} карточек для повторения
+                {studyCards.length} карточек в хронологическом порядке
               </div>
             </div>
             <div className="grid gap-5 xl:grid-cols-2">
-              {excerpts.map((excerpt, index) => (
-                <ExcerptCard
-                  key={excerpt.id}
-                  index={index + 1}
-                  title={excerpt.title}
-                  time={excerpt.time}
-                  place={excerpt.place}
-                  participants={excerpt.participants}
-                  essence={excerpt.essence}
-                  causes={excerpt.causes}
-                  results={excerpt.results}
-                />
+              {studyCards.map((card, index) => (
+                <StudyCardView key={card.id} index={index + 1} card={card} />
               ))}
             </div>
           </section>
@@ -208,14 +254,14 @@ export default function ChapterPage() {
                   Практика
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-foreground">
-                  Практические карточки
+                  Практические задания
                 </h3>
               </div>
               <div className="text-sm text-muted">
-                {practiceItems.length} карточек по материалам контрольной работы
+                {practiceItems.length} вопросов в случайном порядке
               </div>
             </div>
-            <PracticeSession items={practiceItems} />
+            <PracticeSession key={`chapter-${chapter.id}`} items={practiceItems} />
           </section>
         </>
       ) : (
@@ -227,9 +273,8 @@ export default function ChapterPage() {
             Материалы для этой главы ещё собираются
           </h3>
           <p className="mx-auto max-w-2xl text-sm leading-7 text-foreground/78">
-            Для первой итерации курс полностью запущен только по первой главе.
-            Следующие разделы будут наполняться по той же структуре: краткие
-            конспекты, вопросы из контрольных работ и пояснения к ответам.
+            Следующие разделы будут наполняться по той же структуре: хронологический обзор,
+            опорные карточки по учебнику и тренировка на основе контрольных работ.
           </p>
         </section>
       )}

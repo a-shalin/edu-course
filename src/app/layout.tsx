@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./globals.css";
-import { chapters, getReadyChapterCount, lessonExcerpts } from "@/lib/course-data";
+import { chapters, getReadyChapterCount, studyCards } from "@/lib/course-data";
 import { getPracticeItemCount } from "@/lib/practice";
 
 function Sidebar({
@@ -20,10 +20,7 @@ function Sidebar({
   return (
     <>
       {open && (
-        <div
-          className="fixed inset-0 z-30 bg-black/20 lg:hidden"
-          onClick={onClose}
-        />
+        <div className="fixed inset-0 z-30 bg-black/20 lg:hidden" onClick={onClose} />
       )}
       <aside
         className={`fixed top-0 left-0 z-40 h-full w-80 border-r border-border bg-card transition-transform duration-200 lg:translate-x-0 ${
@@ -31,19 +28,13 @@ function Sidebar({
         }`}
       >
         <div className="flex h-full flex-col">
-          <Link
-            href="/"
-            className="border-b border-border px-6 py-6"
-            onClick={onClose}
-          >
+          <Link href="/" className="border-b border-border px-6 py-6" onClick={onClose}>
             <div className="flex items-center gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-full border border-accent/20 bg-accent/10 font-serif text-lg font-bold text-accent">
                 IX
               </div>
               <div>
-                <div className="font-serif text-xl font-bold text-foreground">
-                  История России
-                </div>
+                <div className="font-serif text-xl font-bold text-foreground">История России</div>
                 <div className="text-xs uppercase tracking-[0.22em] text-muted">
                   Интерактивный курс
                 </div>
@@ -63,9 +54,7 @@ function Sidebar({
                   href={`/chapter/${chapter.id}`}
                   onClick={onClose}
                   className={`mb-1 block rounded-[1.2rem] px-4 py-3 text-sm transition-colors ${
-                    isActive
-                      ? "bg-burgundy text-white"
-                      : "text-foreground hover:bg-paper"
+                    isActive ? "bg-burgundy text-white" : "text-foreground hover:bg-paper"
                   }`}
                 >
                   <div className="mb-1 text-[11px] uppercase tracking-[0.22em] opacity-70">
@@ -87,7 +76,7 @@ function Sidebar({
               </div>
               <div className="flex justify-between">
                 <span>Карточки</span>
-                <span className="text-foreground">{lessonExcerpts.length}</span>
+                <span className="text-foreground">{studyCards.length}</span>
               </div>
               <div className="flex justify-between">
                 <span>Практика</span>
@@ -142,12 +131,8 @@ export default function RootLayout({
               IX
             </div>
             <div className="ml-3">
-              <div className="font-serif text-base font-bold text-foreground">
-                История России
-              </div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-muted">
-                9 класс
-              </div>
+              <div className="font-serif text-base font-bold text-foreground">История России</div>
+              <div className="text-[11px] uppercase tracking-[0.18em] text-muted">9 класс</div>
             </div>
           </header>
 

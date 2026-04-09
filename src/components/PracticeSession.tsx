@@ -36,7 +36,7 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
     <div className="mb-8">
       <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-muted">
         <span>
-          Карточка {current + 1} из {total}
+          Вопрос {current + 1} из {total}
         </span>
         <span>{Math.round(pct)}%</span>
       </div>
@@ -605,11 +605,23 @@ function ScoreScreen({
 }
 
 export function PracticeSession({ items }: { items: PracticeItem[] }) {
+  const shuffleItems = (sourceItems: PracticeItem[]) => {
+    const next = [...sourceItems];
+
+    for (let index = next.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+    }
+
+    return next;
+  };
+
+  const [sessionItems, setSessionItems] = useState<PracticeItem[]>(() => shuffleItems(items));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [responses, setResponses] = useState<Record<string, PartResponse>>({});
   const [finished, setFinished] = useState(false);
 
-  if (items.length === 0) {
+  if (sessionItems.length === 0) {
     return (
       <div className="rounded-[2rem] border border-dashed border-border bg-card p-8 text-center text-sm leading-7 text-foreground/78">
         Практические карточки для этой главы пока не подготовлены.
@@ -617,7 +629,7 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
     );
   }
 
-  const currentItem = items[currentIndex];
+  const currentItem = sessionItems[currentIndex];
   const canContinue = currentItem.parts.every((part) => isPartCompleted(part, responses[part.id]));
 
   const updateResponse = (partId: string, patch: Partial<PartResponse>) => {
@@ -631,7 +643,7 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
   };
 
   const handleNext = () => {
-    if (currentIndex + 1 >= items.length) {
+    if (currentIndex + 1 >= sessionItems.length) {
       setFinished(true);
       return;
     }
@@ -640,26 +652,24 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
   };
 
   const handleRestart = () => {
+    setSessionItems(shuffleItems(items));
     setResponses({});
     setCurrentIndex(0);
     setFinished(false);
   };
 
   if (finished) {
-    return <ScoreScreen items={items} responses={responses} onRestart={handleRestart} />;
+    return <ScoreScreen items={sessionItems} responses={responses} onRestart={handleRestart} />;
   }
 
   return (
     <div className="rounded-[2rem] border border-border bg-card p-6 shadow-[0_20px_80px_rgba(59,37,26,0.08)] lg:p-8">
-      <ProgressBar current={currentIndex} total={items.length} />
+      <ProgressBar current={currentIndex} total={sessionItems.length} />
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="mb-2 text-xs uppercase tracking-[0.18em] text-muted">{currentItem.sourceLabel}</div>
-          <h4 className="font-serif text-2xl font-bold leading-tight text-foreground">
-            {currentItem.title}
-          </h4>
-        </div>
+        <h4 className="font-serif text-2xl font-bold leading-tight text-foreground">
+          {currentItem.title}
+        </h4>
       </div>
 
       <div className="space-y-4">
@@ -733,7 +743,7 @@ export function PracticeSession({ items }: { items: PracticeItem[] }) {
           onClick={handleNext}
           className="mt-8 rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-soft"
         >
-          {currentIndex + 1 >= items.length ? "Посмотреть результат" : "Следующая карточка"}
+          {currentIndex + 1 >= sessionItems.length ? "Посмотреть результат" : "Следующий вопрос"}
         </button>
       ) : null}
     </div>
