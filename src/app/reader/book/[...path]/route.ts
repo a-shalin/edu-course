@@ -28,9 +28,24 @@ function getContentType(filePath: string): string {
   return CONTENT_TYPES[ext] ?? "application/octet-stream";
 }
 
+function normalizeFontStylesheetLoading(html: string): string {
+  return html.replace(
+    /\smedia="print"\s+onload="this\.media='all'"/g,
+    ""
+  );
+}
+
 function injectReaderEnhancements(html: string, sourcePath: string): string {
+  const bootstrapScript = `
+<script>
+document.documentElement.classList.add("course-reader-fonts-pending");
+</script>`;
+
   const styles = `
 <style>
+html.course-reader-fonts-pending body {
+  visibility: hidden;
+}
 span[data-course-anchor="true"] {
   display: block;
   height: 0;
@@ -51,6 +66,20 @@ span[data-course-anchor="true"] {
 <script>
 (function () {
   var sourcePath = ${JSON.stringify(sourcePath)};
+
+  function revealWhenFontsReady() {
+    var show = function () {
+      document.documentElement.classList.remove("course-reader-fonts-pending");
+    };
+
+    if (!document.fonts || !document.fonts.ready) {
+      show();
+      return;
+    }
+
+    document.fonts.ready.then(show).catch(show);
+    window.setTimeout(show, 1500);
+  }
 
   function notifyParent() {
     try {
@@ -95,6 +124,7 @@ span[data-course-anchor="true"] {
   });
 
   window.addEventListener("load", function () {
+    revealWhenFontsReady();
     notifyParent();
     window.requestAnimationFrame(function () {
       window.requestAnimationFrame(highlightTarget);
@@ -105,8 +135,10 @@ span[data-course-anchor="true"] {
 })();
 </script>`;
 
-  return html
-    .replace("</head>", `${styles}</head>`)
+  const normalizedHtml = normalizeFontStylesheetLoading(html);
+
+  return normalizedHtml
+    .replace("</head>", `${bootstrapScript}${styles}</head>`)
     .replace("</body>", `${script}</body>`);
 }
 
