@@ -34,6 +34,8 @@ The target chapter module contains:
 - Learner-facing practice titles, section headers, and helper labels must not reveal the correct answer before the learner interacts with the item.
 - Source answer instructions should be preserved unless they duplicate the learner action already shown in the interactive control.
 - If the same task would otherwise appear in both the source block and the interactive prompt, keep the concise action phrase in the interactive prompt and trim the repeated instruction from the learner-facing source block.
+- If a source-side numbered statement list is identical to the interactive answer options, remove that list from the learner-facing source block and keep it only in the interactive control.
+- Apply the same deduplication rule to titles: when the interactive prompt already tells the learner what to do, the title should name the topic or source focus, not repeat the task mechanic such as `верные суждения`.
 - Visible support-card layout in this repo: first block combines `Время`, `Место`, and `Участники` into short text lines with labels; second block contains paragraph sections `Главное`, then optional `Причины`, `Итоги`.
 
 ## Workflow
@@ -86,6 +88,7 @@ The target chapter module contains:
 ### Choose N correct statements
 - Preserve the excerpt and every numbered statement.
 - Use exact-N selection when the source asks for two or another fixed count.
+- When the numbered statements are rendered as interactive options, do not also repeat the same list in the learner-facing source block.
 
 ### Image and map blocks
 - Keep the image or map visible.
@@ -141,6 +144,8 @@ The target chapter module contains:
 - No derived practice card shows leftover sibling questions from the same split source task.
 - No derived compare-and-contrast card keeps empty tables or obsolete instructions about formulating comparison criteria.
 - No learner-facing card repeats the same task instruction in both the source block and the interactive prompt; when deduplication is needed, the interactive prompt keeps the action phrase.
+- No learner-facing card repeats the same numbered statement list in both the source block and the interactive options.
+- No learner-facing title repeats the same task mechanic already expressed by the interactive prompt.
 - Practice metadata retains source order internally.
 - Practice is shuffled in the learner UI.
 - No learner-facing practice card shows source badges.
