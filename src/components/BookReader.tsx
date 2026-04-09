@@ -103,8 +103,8 @@ export function BookReader({
               </button>
             </div>
 
-            <div className="border-b border-border bg-paper px-4 py-4">
-              <div className="max-h-60 space-y-2 overflow-y-auto pr-1">
+            <div className="border-b border-border bg-paper px-4 py-3">
+              <div className="grid max-h-56 gap-2 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
                 {sections.map((section) => {
                   const active = activeSection?.id === section.id;
 
@@ -113,14 +113,16 @@ export function BookReader({
                       key={section.id}
                       type="button"
                       onClick={() => onTargetChange({ sectionId: section.id })}
-                      className={`flex w-full items-center justify-between rounded-[1rem] border px-4 py-3 text-left transition-colors ${
+                      title={section.title}
+                      className={`min-w-0 rounded-[0.9rem] border px-3 py-2 text-left transition-colors ${
                         active
                           ? "border-accent bg-accent/8 text-foreground"
                           : "border-border bg-card text-foreground hover:border-accent/40"
                       }`}
                     >
-                      <span className="pr-4 text-sm leading-6">{section.title}</span>
-                      <span className="text-lg text-muted">{active ? "−" : "+"}</span>
+                      <div className="text-xs leading-5 text-foreground/82">
+                        {section.title}
+                      </div>
                     </button>
                   );
                 })}
