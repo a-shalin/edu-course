@@ -3,6 +3,7 @@
 Use `.codex/skills/russian-history-control-work-transform/SKILL.md` for any conversion of files under `books/russian-history-9/books/russian-history/control-work` into course practice cards.
 
 Mandatory rules:
+- Answer user-facing assistant messages in English only unless the user explicitly asks for another language.
 - Preserve all source content between question `N.` and question `N+1.` before adding interaction.
 - Do not flatten structured prompts into paraphrased one-line questions.
 - Keep source headers, answer instructions, tables, images, maps, and schemes.

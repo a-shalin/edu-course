@@ -52,7 +52,7 @@ function DetailParagraph({
 
   return (
     <div>
-      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
+      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-black">
         {label}
       </div>
       <p className="text-sm leading-7 text-foreground/82">{value}</p>
