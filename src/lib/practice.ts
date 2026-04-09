@@ -108,6 +108,21 @@ export type PracticeItem = {
   parts: PracticePart[];
 };
 
+export function isScorablePracticePart(part: PracticePart): part is Extract<
+  PracticePart,
+  { interaction: "single_choice" | "multi_select_exact_n" }
+> {
+  return part.interaction === "single_choice" || part.interaction === "multi_select_exact_n";
+}
+
+export function isScorablePracticeItem(item: PracticeItem): boolean {
+  return item.parts.some(isScorablePracticePart);
+}
+
+export function getScorablePracticeItemCount(items: PracticeItem[]): number {
+  return items.filter(isScorablePracticeItem).length;
+}
+
 type PracticeSeed = Omit<PracticeItem, "sourceOrder" | "sourceLabel">;
 
 const gen = (text: string): MarkedText => ({ text, generated: true });

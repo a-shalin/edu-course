@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { BookTarget } from "@/lib/book-data";
 import type {
   GuidedSubtask,
@@ -11,12 +11,28 @@ import type {
   PracticeItem,
   PracticePart,
 } from "@/lib/practice";
+import {
+  getScorablePracticeItemCount,
+  isScorablePracticeItem,
+  isScorablePracticePart,
+} from "@/lib/practice";
+import {
+  clearSolvedPracticeItemIds,
+  readSolvedPracticeItemIds,
+  writeSolvedPracticeItemIds,
+} from "@/lib/practice-progress";
 
 type PartResponse = {
   selected?: string;
   selectedMany?: string[];
   submitted?: boolean;
   revealed?: boolean;
+};
+
+type PracticeProgressStats = {
+  solvedCount: number;
+  remainingCount: number;
+  totalCount: number;
 };
 
 function MarkedInline({ value }: { value: MarkedText }) {
@@ -30,16 +46,20 @@ function MarkedInline({ value }: { value: MarkedText }) {
   );
 }
 
-function ProgressBar({ current, total }: { current: number; total: number }) {
-  const pct = ((current + 1) / total) * 100;
+function ProgressBar({
+  solvedCount,
+  remainingCount,
+  totalCount,
+}: PracticeProgressStats) {
+  const pct = totalCount > 0 ? (solvedCount / totalCount) * 100 : 0;
 
   return (
     <div className="mb-8">
       <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-muted">
         <span>
-          Вопрос {current + 1} из {total}
+          Решено {solvedCount} из {totalCount}
         </span>
-        <span>{Math.round(pct)}%</span>
+        <span>Осталось {remainingCount}</span>
       </div>
       <div className="h-1.5 w-full rounded-full bg-border">
         <div
@@ -48,6 +68,33 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
         />
       </div>
     </div>
+  );
+}
+
+function shuffleItems(sourceItems: PracticeItem[]) {
+  const next = [...sourceItems];
+
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+
+  return next;
+}
+
+function getFilteredSolvedItemIds(items: PracticeItem[], solvedItemIds: string[]) {
+  const validScorableIds = new Set(
+    items.filter(isScorablePracticeItem).map((item) => item.id)
+  );
+
+  return [...new Set(solvedItemIds)].filter((itemId) => validScorableIds.has(itemId));
+}
+
+function buildSessionItems(items: PracticeItem[], solvedItemIds: string[]) {
+  const solvedSet = new Set(solvedItemIds);
+
+  return shuffleItems(
+    items.filter((item) => !isScorablePracticeItem(item) || !solvedSet.has(item.id))
   );
 }
 
@@ -592,11 +639,29 @@ function isPartCompleted(part: PracticePart, response?: PartResponse): boolean {
   return Boolean(response?.revealed);
 }
 
+function isPartCorrect(part: Extract<PracticePart, { interaction: "single_choice" | "multi_select_exact_n" }>, response?: PartResponse) {
+  if (part.interaction === "single_choice") {
+    return response?.selected === part.correctAnswer;
+  }
+
+  return isCorrectMultiSelect(part, response);
+}
+
+function isPracticeItemSolved(item: PracticeItem, responses: Record<string, PartResponse>) {
+  const scorableParts = item.parts.filter(isScorablePracticePart);
+
+  if (scorableParts.length === 0) {
+    return false;
+  }
+
+  return scorableParts.every((part) => isPartCorrect(part, responses[part.id]));
+}
+
 function getScorableParts(items: PracticeItem[]) {
   return items.flatMap((item) =>
     item.parts.filter(
       (part): part is Extract<PracticePart, { interaction: "single_choice" | "multi_select_exact_n" }> =>
-        part.interaction === "single_choice" || part.interaction === "multi_select_exact_n"
+        isScorablePracticePart(part)
     )
   );
 }
@@ -604,21 +669,19 @@ function getScorableParts(items: PracticeItem[]) {
 function ScoreScreen({
   items,
   responses,
+  stats,
   onRestart,
+  onResetProgress,
 }: {
   items: PracticeItem[];
   responses: Record<string, PartResponse>;
+  stats: PracticeProgressStats;
   onRestart: () => void;
+  onResetProgress: () => void;
 }) {
   const scorableParts = useMemo(() => getScorableParts(items), [items]);
   const correct = scorableParts.filter((part) => {
-    const response = responses[part.id];
-
-    if (part.interaction === "single_choice") {
-      return response?.selected === part.correctAnswer;
-    }
-
-    return isCorrectMultiSelect(part, response);
+    return isPartCorrect(part, responses[part.id]);
   }).length;
 
   const total = scorableParts.length;
@@ -632,66 +695,118 @@ function ScoreScreen({
           {correct} из {total} проверяемых ответов верны
         </div>
         <div className="mt-3 text-sm text-foreground/72">
-          В этой итерации практикум сочетает проверяемые задания, задания с показом ответа и ориентиры для сложных сравнительных вопросов.
+          Всего по главе решено {stats.solvedCount} из {stats.totalCount}. Осталось {stats.remainingCount}.
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={onRestart}
-        className="rounded-full bg-accent px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-soft"
-      >
-        Пройти ещё раз
-      </button>
+      <div className="flex flex-wrap justify-center gap-3">
+        <button
+          type="button"
+          onClick={onRestart}
+          className="rounded-full bg-accent px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-soft"
+        >
+          Пройти ещё раз
+        </button>
+        <button
+          type="button"
+          onClick={onResetProgress}
+          className="rounded-full border border-border px-8 py-3 text-sm font-semibold text-foreground transition-colors hover:border-accent/40 hover:text-accent"
+        >
+          Сбросить прогресс
+        </button>
+      </div>
     </div>
   );
 }
 
 export function PracticeSession({
+  chapterId,
   items,
   getBookTarget,
   onOpenBookTarget,
+  onStatsChange,
 }: {
+  chapterId: number;
   items: PracticeItem[];
   getBookTarget?: (item: PracticeItem) => BookTarget | undefined;
   onOpenBookTarget?: (target: BookTarget) => void;
+  onStatsChange?: (stats: PracticeProgressStats) => void;
 }) {
-  const shuffleItems = (sourceItems: PracticeItem[]) => {
-    const next = [...sourceItems];
-
-    for (let index = next.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1));
-      [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
-    }
-
-    return next;
-  };
-
-  const [sessionItems, setSessionItems] = useState<PracticeItem[]>(() => shuffleItems(items));
+  const initialSolvedItemIds = getFilteredSolvedItemIds(
+    items,
+    readSolvedPracticeItemIds(chapterId)
+  );
+  const [solvedItemIds, setSolvedItemIds] = useState<string[]>(initialSolvedItemIds);
+  const [sessionItems, setSessionItems] = useState<PracticeItem[]>(() =>
+    buildSessionItems(items, initialSolvedItemIds)
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [responses, setResponses] = useState<Record<string, PartResponse>>({});
   const [finished, setFinished] = useState(false);
+  const totalScorableCount = useMemo(() => getScorablePracticeItemCount(items), [items]);
+  const solvedCount = solvedItemIds.length;
+  const remainingCount = Math.max(totalScorableCount - solvedCount, 0);
 
-  if (sessionItems.length === 0) {
-    return (
-      <div className="rounded-[2rem] border border-dashed border-border bg-card p-8 text-center text-sm leading-7 text-foreground/78">
-        Практические карточки для этой главы пока не подготовлены.
-      </div>
-    );
-  }
+  const stats = useMemo(
+    () => ({
+      solvedCount,
+      remainingCount,
+      totalCount: totalScorableCount,
+    }),
+    [remainingCount, solvedCount, totalScorableCount]
+  );
+
+  const rebuildSession = useCallback(
+    (nextSolvedItemIds: string[]) => {
+      setSessionItems(buildSessionItems(items, nextSolvedItemIds));
+      setResponses({});
+      setCurrentIndex(0);
+      setFinished(false);
+    },
+    [items]
+  );
+
+  useEffect(() => {
+    writeSolvedPracticeItemIds(chapterId, solvedItemIds);
+  }, [chapterId, solvedItemIds]);
+
+  useEffect(() => {
+    onStatsChange?.(stats);
+  }, [onStatsChange, stats]);
 
   const currentItem = sessionItems[currentIndex];
-  const canContinue = currentItem.parts.every((part) => isPartCompleted(part, responses[part.id]));
+  const canContinue = currentItem
+    ? currentItem.parts.every((part) => isPartCompleted(part, responses[part.id]))
+    : false;
 
-  const updateResponse = (partId: string, patch: Partial<PartResponse>) => {
-    setResponses((prev) => ({
-      ...prev,
-      [partId]: {
-        ...prev[partId],
-        ...patch,
-      },
-    }));
-  };
+  const markItemSolved = useCallback((itemId: string) => {
+    setSolvedItemIds((prev) => {
+      if (prev.includes(itemId)) {
+        return prev;
+      }
+
+      return [...prev, itemId];
+    });
+  }, []);
+
+  const updateResponse = useCallback(
+    (item: PracticeItem, partId: string, patch: Partial<PartResponse>) => {
+      const nextResponses = {
+        ...responses,
+        [partId]: {
+          ...responses[partId],
+          ...patch,
+        },
+      };
+
+      setResponses(nextResponses);
+
+      if (isPracticeItemSolved(item, nextResponses)) {
+        markItemSolved(item.id);
+      }
+    },
+    [markItemSolved, responses]
+  );
 
   const handleNext = () => {
     if (currentIndex + 1 >= sessionItems.length) {
@@ -703,24 +818,76 @@ export function PracticeSession({
   };
 
   const handleRestart = () => {
-    setSessionItems(shuffleItems(items));
-    setResponses({});
-    setCurrentIndex(0);
-    setFinished(false);
+    rebuildSession(solvedItemIds);
   };
 
+  const handleResetProgress = () => {
+    clearSolvedPracticeItemIds(chapterId);
+    setSolvedItemIds([]);
+    rebuildSession([]);
+  };
+
+  if (sessionItems.length === 0) {
+    if (items.length > 0 && totalScorableCount > 0) {
+      return (
+        <div className="rounded-[2rem] border border-border bg-card p-8 shadow-[0_20px_80px_rgba(59,37,26,0.08)]">
+          <ProgressBar {...stats} />
+          <div className="rounded-[1.6rem] border border-dashed border-border bg-paper p-8 text-center">
+            <div className="mb-3 text-xs uppercase tracking-[0.24em] text-muted">
+              Практика завершена
+            </div>
+            <h4 className="mb-3 font-serif text-2xl font-bold text-foreground">
+              Все проверяемые карточки этой главы уже решены
+            </h4>
+            <p className="mx-auto max-w-2xl text-sm leading-7 text-foreground/78">
+              Сохранённый прогресс применён автоматически. Можно открыть карточки заново, сбросив прогресс только для этой главы.
+            </p>
+            <button
+              type="button"
+              onClick={handleResetProgress}
+              className="mt-6 rounded-full border border-border px-6 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-accent/40 hover:text-accent"
+            >
+              Сбросить прогресс
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="rounded-[2rem] border border-dashed border-border bg-card p-8 text-center text-sm leading-7 text-foreground/78">
+        Практические карточки для этой главы пока не подготовлены.
+      </div>
+    );
+  }
+
   if (finished) {
-    return <ScoreScreen items={sessionItems} responses={responses} onRestart={handleRestart} />;
+    return (
+      <ScoreScreen
+        items={sessionItems}
+        responses={responses}
+        stats={stats}
+        onRestart={handleRestart}
+        onResetProgress={handleResetProgress}
+      />
+    );
   }
 
   return (
     <div className="rounded-[2rem] border border-border bg-card p-6 shadow-[0_20px_80px_rgba(59,37,26,0.08)] lg:p-8">
-      <ProgressBar current={currentIndex} total={sessionItems.length} />
+      <ProgressBar {...stats} />
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <h4 className="font-serif text-2xl font-bold leading-tight text-foreground">
           {currentItem.title}
         </h4>
+        <button
+          type="button"
+          onClick={handleResetProgress}
+          className="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-foreground transition-colors hover:border-accent/40 hover:text-accent"
+        >
+          Сбросить прогресс
+        </button>
       </div>
 
       <div className="space-y-4">
@@ -740,7 +907,7 @@ export function PracticeSession({
                 key={part.id}
                 part={part}
                 response={response}
-                onSelect={(label) => updateResponse(part.id, { selected: label })}
+                onSelect={(label) => updateResponse(currentItem, part.id, { selected: label })}
                 bookTarget={bookTarget}
                 onOpenBookTarget={onOpenBookTarget}
               />
@@ -762,9 +929,9 @@ export function PracticeSession({
                       ? selectedMany
                       : [...selectedMany, label];
 
-                  updateResponse(part.id, { selectedMany: next });
+                  updateResponse(currentItem, part.id, { selectedMany: next });
                 }}
-                onSubmit={() => updateResponse(part.id, { submitted: true })}
+                onSubmit={() => updateResponse(currentItem, part.id, { submitted: true })}
                 bookTarget={bookTarget}
                 onOpenBookTarget={onOpenBookTarget}
               />
@@ -777,7 +944,7 @@ export function PracticeSession({
                 key={part.id}
                 part={part}
                 revealed={Boolean(response?.revealed)}
-                onReveal={() => updateResponse(part.id, { revealed: true })}
+                onReveal={() => updateResponse(currentItem, part.id, { revealed: true })}
                 bookTarget={bookTarget}
                 onOpenBookTarget={onOpenBookTarget}
               />
@@ -789,7 +956,7 @@ export function PracticeSession({
               key={part.id}
               part={part}
               revealed={Boolean(response?.revealed)}
-              onReveal={() => updateResponse(part.id, { revealed: true })}
+              onReveal={() => updateResponse(currentItem, part.id, { revealed: true })}
               bookTarget={bookTarget}
               onOpenBookTarget={onOpenBookTarget}
             />

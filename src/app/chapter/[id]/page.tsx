@@ -21,7 +21,7 @@ import {
   type StudyCard,
 } from "@/lib/course-data";
 import type { PracticeItem } from "@/lib/practice";
-import { getPracticeItemsByChapter } from "@/lib/practice";
+import { getPracticeItemsByChapter, getScorablePracticeItemCount } from "@/lib/practice";
 
 const PracticeSession = dynamic(
   () => import("@/components/PracticeSession").then((module) => module.PracticeSession),
@@ -214,6 +214,22 @@ export default function ChapterPage() {
   const params = useParams<{ id: string }>();
   const chapterId = Number(params.id);
   const chapter = getChapter(chapterId);
+  const practiceItems = useMemo(
+    () => (chapter ? getPracticeItemsByChapter(chapter.id) : []),
+    [chapter]
+  );
+  const practiceTotalCount = useMemo(
+    () => getScorablePracticeItemCount(practiceItems),
+    [practiceItems]
+  );
+  const emptyPracticeStats = useMemo(
+    () => ({
+      solvedCount: 0,
+      remainingCount: practiceTotalCount,
+      totalCount: practiceTotalCount,
+    }),
+    [practiceTotalCount]
+  );
 
   const bookSections = useMemo(
     () => getBookSectionsByChapter(chapterId),
@@ -235,6 +251,9 @@ export default function ChapterPage() {
     setReaderOpen((prev) => !prev);
     setActiveBookTarget((prev) => prev ?? initialBookTarget);
   }, [initialBookTarget]);
+  const [practiceStatsByChapter, setPracticeStatsByChapter] = useState<
+    Record<number, { solvedCount: number; remainingCount: number; totalCount: number }>
+  >({});
 
   const handleReaderTargetChange = useCallback((target: BookTarget) => {
     setActiveBookTarget(target);
@@ -244,6 +263,31 @@ export default function ChapterPage() {
     const supportingCards = getSupportingStudyCardsByPracticeItem(item.id);
     return getBookTargetForSupportingCards(supportingCards.map((card) => card.id));
   }, []);
+
+  const handlePracticeStatsChange = useCallback(
+    (stats: { solvedCount: number; remainingCount: number; totalCount: number }) => {
+      setPracticeStatsByChapter((prev) => {
+        const current = prev[chapterId];
+
+        if (
+          current &&
+          current.solvedCount === stats.solvedCount &&
+          current.remainingCount === stats.remainingCount &&
+          current.totalCount === stats.totalCount
+        ) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          [chapterId]: stats,
+        };
+      });
+    },
+    [chapterId]
+  );
+
+  const practiceStats = practiceStatsByChapter[chapterId] ?? emptyPracticeStats;
 
   if (!chapter) {
     return (
@@ -260,7 +304,6 @@ export default function ChapterPage() {
 
   const summaryEntries = getChapterSummaryByChapter(chapter.id);
   const studyCards = getStudyCardsByChapter(chapter.id);
-  const practiceItems = getPracticeItemsByChapter(chapter.id);
 
   return (
     <>
@@ -353,14 +396,17 @@ export default function ChapterPage() {
                   </h3>
                 </div>
                 <div className="text-sm text-muted">
-                  {practiceItems.length} вопросов в случайном порядке
+                  Решено {practiceStats.solvedCount} из {practiceStats.totalCount} · осталось{" "}
+                  {practiceStats.remainingCount}
                 </div>
               </div>
               <PracticeSession
                 key={`chapter-${chapter.id}`}
+                chapterId={chapter.id}
                 items={practiceItems}
                 getBookTarget={getPracticeBookTarget}
                 onOpenBookTarget={openBookTarget}
+                onStatsChange={handlePracticeStatsChange}
               />
             </section>
           </>
