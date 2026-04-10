@@ -82,9 +82,18 @@ span[data-course-anchor="true"] {
   }
 
   function notifyParent() {
+    var anchorId = decodeURIComponent(window.location.hash.replace(/^#/, "")).trim();
+
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: "course-book:navigated", sourcePath: sourcePath }, window.location.origin);
+        window.parent.postMessage(
+          {
+            type: "course-book:navigated",
+            sourcePath: sourcePath,
+            anchorId: anchorId || undefined,
+          },
+          window.location.origin
+        );
       }
     } catch (error) {
       // Ignore cross-frame notification issues.
@@ -119,7 +128,10 @@ span[data-course-anchor="true"] {
 
   window.addEventListener("hashchange", function () {
     window.requestAnimationFrame(function () {
-      window.requestAnimationFrame(highlightTarget);
+      window.requestAnimationFrame(function () {
+        highlightTarget();
+        notifyParent();
+      });
     });
   });
 

@@ -29,6 +29,7 @@ function ReaderToggle({
     <button
       type="button"
       onClick={onClick}
+      data-testid="book-reader-toggle"
       className={`${positionClass} rounded-l-[1.2rem] border border-r-0 border-border bg-burgundy px-3 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_14px_36px_rgba(92,34,29,0.28)] transition-colors hover:bg-accent`}
       aria-label={open ? "Скрыть учебник" : "Показать учебник"}
     >
@@ -57,7 +58,7 @@ export function BookReader({
         return;
       }
 
-      const data = event.data as { type?: string; sourcePath?: string } | null;
+      const data = event.data as { type?: string; sourcePath?: string; anchorId?: string } | null;
 
       if (!data || data.type !== "course-book:navigated" || !data.sourcePath) {
         return;
@@ -69,12 +70,24 @@ export function BookReader({
         return;
       }
 
-      onTargetChange({ sectionId: matchedSection.id });
+      const normalizedAnchorId = data.anchorId?.trim() || undefined;
+
+      if (
+        activeTarget?.sectionId === matchedSection.id &&
+        activeTarget.anchorId === normalizedAnchorId
+      ) {
+        return;
+      }
+
+      onTargetChange({
+        sectionId: matchedSection.id,
+        anchorId: normalizedAnchorId,
+      });
     };
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [onTargetChange, sections]);
+  }, [activeTarget, onTargetChange, sections]);
 
   if (sections.length === 0) {
     return null;
@@ -86,7 +99,10 @@ export function BookReader({
       {open ? (
         <>
           <div className="fixed inset-0 z-40 bg-black/20 xl:hidden" onClick={onToggle} />
-          <aside className="fixed top-0 right-0 z-50 flex h-screen w-full max-w-[42rem] flex-col border-l border-border bg-background shadow-[-20px_0_60px_rgba(59,37,26,0.16)] xl:w-[36rem]">
+          <aside
+            data-testid="book-reader"
+            className="fixed top-0 right-0 z-50 flex h-screen w-full max-w-[42rem] flex-col border-l border-border bg-background shadow-[-20px_0_60px_rgba(59,37,26,0.16)] xl:w-[36rem]"
+          >
             <ReaderToggle open onClick={onToggle} attached />
 
             <div className="flex items-center justify-between border-b border-border bg-card px-5 py-4">
@@ -112,6 +128,7 @@ export function BookReader({
                     <button
                       key={section.id}
                       type="button"
+                      data-testid={`book-reader-section-${section.id}`}
                       onClick={() => onTargetChange({ sectionId: section.id })}
                       title={section.title}
                       className={`min-w-0 rounded-[0.9rem] border px-3 py-2 text-left transition-colors ${
@@ -137,6 +154,7 @@ export function BookReader({
                 {readerHref ? (
                   <iframe
                     key={readerHref}
+                    data-testid="book-reader-frame"
                     src={readerHref}
                     title={activeSection?.title ?? "Учебник"}
                     className="h-full w-full border-0 bg-white"
