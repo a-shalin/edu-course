@@ -1,0 +1,121 @@
+---
+- name: Deploy RH9
+  hosts: webservers
+  gather_facts: false
+
+  tasks:
+    - name: Verify Docker is installed
+      ansible.builtin.command: docker --version
+      changed_when: false
+
+    - name: Verify Docker Compose plugin is installed
+      ansible.builtin.command: docker compose version
+      changed_when: false
+
+    - name: Verify shared edge network exists
+      ansible.builtin.command: docker network inspect edge
+      changed_when: false
+
+    - name: Create local deploy workspace
+      ansible.builtin.tempfile:
+        state: directory
+        prefix: "{{ app_name }}-deploy-"
+        path: /tmp
+      delegate_to: localhost
+      run_once: true
+      register: local_deploy_workspace
+
+    - name: Create local payload directory
+      ansible.builtin.file:
+        path: "{{ local_deploy_workspace.path }}/payload"
+        state: directory
+        mode: "0755"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Copy flat payload files into local deploy workspace
+      ansible.builtin.command:
+        argv:
+          - cp
+          - "{{ playbook_dir }}/../../{{ item.src }}"
+          - "{{ local_deploy_workspace.path }}/payload/{{ item.dest }}"
+      delegate_to: localhost
+      run_once: true
+      loop:
+        - src: package.json
+          dest: package.json
+        - src: package-lock.json
+          dest: package-lock.json
+        - src: .dockerignore
+          dest: .dockerignore
+        - src: next-env.d.ts
+          dest: next-env.d.ts
+        - src: next.config.ts
+          dest: next.config.ts
+        - src: postcss.config.mjs
+          dest: postcss.config.mjs
+        - src: tsconfig.json
+          dest: tsconfig.json
+        - src: docker/Dockerfile
+          dest: Dockerfile
+
+    - name: Copy source directories into local deploy workspace
+      ansible.builtin.command:
+        argv:
+          - cp
+          - -R
+          - "{{ playbook_dir }}/../../{{ item }}"
+          - "{{ local_deploy_workspace.path }}/payload/{{ item }}"
+      delegate_to: localhost
+      run_once: true
+      loop:
+        - books
+        - public
+        - src
+
+    - name: Render docker-compose.yml into local deploy workspace
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../../docker/docker-compose.yml.j2"
+        dest: "{{ local_deploy_workspace.path }}/payload/docker-compose.yml"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Create local deploy tarball
+      ansible.builtin.command:
+        argv:
+          - tar
+          - -czf
+          - "{{ local_deploy_workspace.path }}/{{ app_name }}-deploy.tgz"
+          - -C
+          - "{{ local_deploy_workspace.path }}/payload"
+          - .
+      delegate_to: localhost
+      run_once: true
+
+    - name: Remove existing app directory
+      ansible.builtin.file:
+        path: "~/{{ app_name }}"
+        state: absent
+
+    - name: Create app directory
+      ansible.builtin.file:
+        path: "~/{{ app_name }}"
+        state: directory
+        mode: "0755"
+
+    - name: Upload and extract deploy payload
+      ansible.builtin.unarchive:
+        src: "{{ local_deploy_workspace.path }}/{{ app_name }}-deploy.tgz"
+        dest: "~/{{ app_name }}"
+
+    - name: Deploy RH9 with Docker Compose
+      ansible.builtin.command:
+        cmd: docker compose up --build --force-recreate -d
+        chdir: "~/{{ app_name }}"
+
+    - name: Remove local deploy workspace
+      ansible.builtin.file:
+        path: "{{ local_deploy_workspace.path }}"
+        state: absent
+      delegate_to: localhost
+      run_once: true

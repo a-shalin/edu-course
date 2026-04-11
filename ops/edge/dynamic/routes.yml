@@ -1,0 +1,28 @@
+http:
+  routers:
+    buddilive:
+      rule: Host(`buddi.ashalin.net`)
+      entryPoints:
+        - websecure
+      service: buddilive
+      tls:
+        certResolver: letsencrypt
+
+    rh9:
+      rule: Host(`rh9.ashalin.net`)
+      entryPoints:
+        - websecure
+      service: rh9
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    buddilive:
+      loadBalancer:
+        servers:
+          - url: http://buddilive-app:8080
+
+    rh9:
+      loadBalancer:
+        servers:
+          - url: http://rh9-app:3000

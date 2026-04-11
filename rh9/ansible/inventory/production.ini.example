@@ -1,0 +1,7 @@
+[webservers]
+rh9_server ansible_host=ora.cloudinfosys.ru ansible_user=ashalin
+
+[webservers:vars]
+domain_name=rh9.ashalin.net
+app_name=rh9
+app_port=3000

@@ -2,7 +2,7 @@
 
 Use `.codex/skills/russian-history-chapter-conversion/SKILL.md` for full chapter conversions in this repository.
 
-Use `.codex/skills/russian-history-control-work-transform/SKILL.md` for isolated conversion of files under `books/russian-history-9/books/russian-history/control-work` into course practice cards.
+Use `.codex/skills/russian-history-control-work-transform/SKILL.md` for isolated conversion of files under `rh9/books/russian-history-9/books/russian-history/control-work` into course practice cards.
 
 Mandatory rules:
 - Answer user-facing assistant messages in English only unless the user explicitly asks for another language.
@@ -23,3 +23,4 @@ Mandatory rules:
 - Learner-facing practice order should be shuffled per session and reshuffled on restart.
 - Each ready chapter should begin with a chronological summary hidden by default and opened on click.
 - Support cards must be shown in chronological order.
+- After changes that affect app behavior or validation, run `npm run lint` and then `npm run e2e`.

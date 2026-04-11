@@ -1,0 +1,53 @@
+---
+- name: Deploy shared Traefik edge
+  hosts: webservers
+  gather_facts: false
+
+  tasks:
+    - name: Verify Docker is installed
+      ansible.builtin.command: docker --version
+      changed_when: false
+
+    - name: Verify Docker Compose plugin is installed
+      ansible.builtin.command: docker compose version
+      changed_when: false
+
+    - name: Create edge directory
+      ansible.builtin.file:
+        path: "~/{{ edge_app_name }}"
+        state: directory
+        mode: "0755"
+
+    - name: Create letsencrypt directory
+      ansible.builtin.file:
+        path: "~/{{ edge_app_name }}/letsencrypt"
+        state: directory
+        mode: "0700"
+
+    - name: Create acme.json if missing
+      ansible.builtin.copy:
+        content: ""
+        dest: "~/{{ edge_app_name }}/letsencrypt/acme.json"
+        mode: "0600"
+        force: false
+
+    - name: Write edge env file
+      ansible.builtin.copy:
+        content: "ACME_EMAIL={{ acme_email }}\n"
+        dest: "~/{{ edge_app_name }}/.env"
+        mode: "0600"
+
+    - name: Copy docker-compose.yml
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../edge/docker-compose.yml"
+        dest: "~/{{ edge_app_name }}/docker-compose.yml"
+
+    - name: Copy dynamic edge config
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../edge/dynamic/"
+        dest: "~/{{ edge_app_name }}/dynamic/"
+
+    - name: Deploy shared edge
+      ansible.builtin.command:
+        cmd: docker compose up -d
+        chdir: "~/{{ edge_app_name }}"

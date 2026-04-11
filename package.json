@@ -1,26 +1,16 @@
 {
-  "name": "russian-history-9-course",
-  "version": "0.1.0",
+  "name": "edu-course",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "dev": "cd rh9 && npm run dev",
+    "build": "cd rh9 && npm run build",
+    "start": "cd rh9 && npm run start",
+    "lint": "cd rh9 && npm run lint",
+    "e2e": "cd rh9 && npm run e2e",
+    "check": "cd rh9 && npm run check",
+    "dev:rh9": "cd rh9 && npm run dev",
+    "build:rh9": "cd rh9 && npm run build",
+    "lint:rh9": "cd rh9 && npm run lint",
+    "e2e:rh9": "cd rh9 && npm run e2e"
   }
 }
