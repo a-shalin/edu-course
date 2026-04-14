@@ -2,6 +2,10 @@ import {
   chapter3StudyCards,
   chapter3SummaryEntries,
 } from "./chapter3-course-data";
+import {
+  chapter4StudyCards,
+  chapter4SummaryEntries,
+} from "./chapter4-course-data";
 
 export type ChapterStatus = "ready" | "planned";
 
@@ -83,7 +87,7 @@ export const chapters: Chapter[] = [
     periodLabel: "1881-1894",
     summary:
       "Внутренняя политика Александра III, экономические перемены, внешняя политика и культурное развитие.",
-    status: "planned",
+    status: "ready",
   },
   {
     id: 5,
@@ -905,6 +909,7 @@ export const studyCards: StudyCard[] = [
     ),
   },
   ...chapter3StudyCards,
+  ...chapter4StudyCards,
 ];
 
 export const chapterSummaryEntries: ChapterSummaryEntry[] = [
@@ -1173,6 +1178,7 @@ export const chapterSummaryEntries: ChapterSummaryEntry[] = [
     body: "Русская музыка, живопись, театр и архитектура выходят на новый уровень: творят Глинка, Иванов и Федотов, строятся ансамбли Бове и сооружения Тона.",
   },
   ...chapter3SummaryEntries,
+  ...chapter4SummaryEntries,
 ];
 
 export function getChapter(id: number): Chapter | undefined {
