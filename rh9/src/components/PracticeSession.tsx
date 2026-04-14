@@ -36,14 +36,7 @@ type PracticeProgressStats = {
 };
 
 function MarkedInline({ value }: { value: MarkedText }) {
-  return (
-    <>
-      {value.text}
-      {value.generated ? (
-        <sup className="ml-0.5 text-[0.7em] font-semibold text-accent">*</sup>
-      ) : null}
-    </>
-  );
+  return <>{value.text}</>;
 }
 
 function ProgressBar({
