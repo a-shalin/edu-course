@@ -1,5 +1,6 @@
 import { chapter3Seeds } from "./chapter3-practice";
 import { chapter4Seeds } from "./chapter4-practice";
+import { chapter5Seeds } from "./chapter5-practice";
 
 export type MarkedText = {
   text: string;
@@ -3563,6 +3564,7 @@ const practiceItems: PracticeItem[] = [
   ...chapter2Seeds,
   ...chapter3Seeds,
   ...chapter4Seeds,
+  ...chapter5Seeds,
 ].map(
   (item, index) => ({
     ...item,

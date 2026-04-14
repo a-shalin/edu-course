@@ -6,6 +6,10 @@ import {
   chapter4StudyCards,
   chapter4SummaryEntries,
 } from "./chapter4-course-data";
+import {
+  chapter5StudyCards,
+  chapter5SummaryEntries,
+} from "./chapter5-course-data";
 
 export type ChapterStatus = "ready" | "planned";
 
@@ -96,7 +100,7 @@ export const chapters: Chapter[] = [
     periodLabel: "1894-1914",
     summary:
       "Николай II, Русско-японская война, революция 1905 года и реформы П. А. Столыпина.",
-    status: "planned",
+    status: "ready",
   },
 ];
 
@@ -910,6 +914,7 @@ export const studyCards: StudyCard[] = [
   },
   ...chapter3StudyCards,
   ...chapter4StudyCards,
+  ...chapter5StudyCards,
 ];
 
 export const chapterSummaryEntries: ChapterSummaryEntry[] = [
@@ -1179,6 +1184,7 @@ export const chapterSummaryEntries: ChapterSummaryEntry[] = [
   },
   ...chapter3SummaryEntries,
   ...chapter4SummaryEntries,
+  ...chapter5SummaryEntries,
 ];
 
 export function getChapter(id: number): Chapter | undefined {

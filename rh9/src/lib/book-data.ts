@@ -8,6 +8,11 @@ import {
   chapter4StudyCardTargets,
   chapter4SummaryTargets,
 } from "./chapter4-book-data";
+import {
+  chapter5BookSections,
+  chapter5StudyCardTargets,
+  chapter5SummaryTargets,
+} from "./chapter5-book-data";
 
 export interface BookSection {
   id: string;
@@ -137,6 +142,7 @@ export const bookSections: BookSection[] = [
   },
   ...chapter3BookSections,
   ...chapter4BookSections,
+  ...chapter5BookSections,
 ];
 
 const studyCardTargets: Record<string, BookTarget> = {
@@ -180,6 +186,7 @@ const studyCardTargets: Record<string, BookTarget> = {
   "c2-s20": { sectionId: "c2-b5", anchorId: "c2-crimean-war-start" },
   ...chapter3StudyCardTargets,
   ...chapter4StudyCardTargets,
+  ...chapter5StudyCardTargets,
 };
 
 const summaryTargets: Record<string, BookTarget> = {
@@ -218,6 +225,7 @@ const summaryTargets: Record<string, BookTarget> = {
   "c2-t17": { sectionId: "c2-b7", anchorId: "c2-architecture" },
   ...chapter3SummaryTargets,
   ...chapter4SummaryTargets,
+  ...chapter5SummaryTargets,
 };
 
 export function getBookSectionsByChapter(chapterId: number): BookSection[] {
