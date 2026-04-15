@@ -2,6 +2,8 @@
 **/node_modules
 **/playwright-report
 **/test-results
+**/__pycache__/
+*.py[cod]
 npm-debug.log*
 ops/edge/.env
 ops/edge/letsencrypt/

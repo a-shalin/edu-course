@@ -1,0 +1,97 @@
+import type { BookSection, BookTarget } from "./book-data";
+
+export const chapter1BookSections: BookSection[] = [
+  {
+    id: "c1-b1",
+    chapterId: 1,
+    title: "§ 1. Великое переселение народов и древние жители нашей страны",
+    sortKey: 100,
+    sourcePath: "books/russian-history/part-1/2.php.html",
+  },
+  {
+    id: "c1-b2",
+    chapterId: 1,
+    title: "§ 2-3. Восточные славяне и их соседи",
+    sortKey: 110,
+    sourcePath: "books/russian-history/part-1/3.php.html",
+  },
+  {
+    id: "c1-b3",
+    chapterId: 1,
+    title: "§ 4. Начало династии Рюриковичей",
+    sortKey: 120,
+    sourcePath: "books/russian-history/part-1/4.php.html",
+  },
+  {
+    id: "c1-b4",
+    chapterId: 1,
+    title: "§ 5-6. Русь при Игоре, Ольге, Святославе",
+    sortKey: 130,
+    sourcePath: "books/russian-history/part-1/5.php.html",
+  },
+  {
+    id: "c1-b5",
+    chapterId: 1,
+    title: "§ 7-8. Русь при Владимире Святом",
+    sortKey: 140,
+    sourcePath: "books/russian-history/part-1/6.php.html",
+  },
+  {
+    id: "c1-b6",
+    chapterId: 1,
+    title: "§ 9. Расцвет Руси при Ярославе Мудром",
+    sortKey: 150,
+    sourcePath: "books/russian-history/part-1/7.php.html",
+  },
+  {
+    id: "c1-b7",
+    chapterId: 1,
+    title: "§ 10-11. Наследники Ярослава Мудрого",
+    sortKey: 160,
+    sourcePath: "books/russian-history/part-1/8.php.html",
+  },
+  {
+    id: "c1-b8",
+    chapterId: 1,
+    title: "§ 12. Русь при Владимире Мономахе",
+    sortKey: 170,
+    sourcePath: "books/russian-history/part-1/9.php.html",
+  },
+];
+
+export const chapter1StudyCardTargets: Record<string, BookTarget> = {
+  "c1-s1": { sectionId: "c1-b3", anchorId: "c1-rurik" },
+  "c1-s2": { sectionId: "c1-b3", anchorId: "c1-oleg-kiev" },
+  "c1-s3": { sectionId: "c1-b3", anchorId: "c1-oleg-tsargrad" },
+  "c1-s4": { sectionId: "c1-b3", anchorId: "c1-oleg-tsargrad" },
+  "c1-s5": { sectionId: "c1-b4", anchorId: "c1-igor" },
+  "c1-s6": { sectionId: "c1-b4", anchorId: "c1-svyatoslav" },
+  "c1-s7": { sectionId: "c1-b5", anchorId: "c1-vladimir" },
+  "c1-s8": { sectionId: "c1-b5", anchorId: "c1-baptism" },
+  "c1-s9": { sectionId: "c1-b6", anchorId: "c1-yaroslav" },
+  "c1-s10": { sectionId: "c1-b6", anchorId: "c1-russkaya-pravda" },
+  "c1-s11": { sectionId: "c1-b7", anchorId: "c1-liubech" },
+  "c1-s12": { sectionId: "c1-b8", anchorId: "c1-monomakh" },
+  "c1-s13": { sectionId: "c1-b6", anchorId: "c1-pvl" },
+  "c1-s14": { sectionId: "c1-b8", anchorId: "c1-monomakh-law" },
+  "c1-s15": { sectionId: "c1-b2", anchorId: "c1-slavs" },
+  "c1-s16": { sectionId: "c1-b4", anchorId: "c1-olga" },
+  "c1-s17": { sectionId: "c1-b7", anchorId: "c1-society" },
+};
+
+export const chapter1SummaryTargets: Record<string, BookTarget> = {
+  "c1-t1": { sectionId: "c1-b3", anchorId: "c1-rurik" },
+  "c1-t2": { sectionId: "c1-b3", anchorId: "c1-oleg-kiev" },
+  "c1-t3": { sectionId: "c1-b3", anchorId: "c1-oleg-tsargrad" },
+  "c1-t4": { sectionId: "c1-b3", anchorId: "c1-oleg-tsargrad" },
+  "c1-t5": { sectionId: "c1-b4", anchorId: "c1-igor" },
+  "c1-t6": { sectionId: "c1-b4", anchorId: "c1-svyatoslav" },
+  "c1-t7": { sectionId: "c1-b5", anchorId: "c1-vladimir" },
+  "c1-t8": { sectionId: "c1-b5", anchorId: "c1-baptism" },
+  "c1-t9": { sectionId: "c1-b6", anchorId: "c1-yaroslav" },
+  "c1-t10": { sectionId: "c1-b6", anchorId: "c1-russkaya-pravda" },
+  "c1-t11": { sectionId: "c1-b7", anchorId: "c1-liubech" },
+  "c1-t12": { sectionId: "c1-b8", anchorId: "c1-monomakh" },
+  "c1-t13": { sectionId: "c1-b6", anchorId: "c1-pvl" },
+  "c1-t14": { sectionId: "c1-b8", anchorId: "c1-monomakh-law" },
+};

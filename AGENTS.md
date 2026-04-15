@@ -2,6 +2,8 @@
 
 Use `.codex/skills/russian-history-chapter-conversion/SKILL.md` for full chapter conversions in this repository.
 
+Use `.codex/skills/russian-history-6-chapter-conversion/SKILL.md` for full RH6 chapter conversions in this repository.
+
 Use `.codex/skills/russian-history-control-work-transform/SKILL.md` for isolated conversion of files under `rh9/books/russian-history-9/books/russian-history/control-work` into course practice cards.
 
 Mandatory rules:

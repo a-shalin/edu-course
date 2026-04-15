@@ -1,3 +1,24 @@
+import {
+  chapter1BookSections,
+  chapter1StudyCardTargets,
+  chapter1SummaryTargets,
+} from "./chapter1-book-data";
+import {
+  chapter2BookSections,
+  chapter2StudyCardTargets,
+  chapter2SummaryTargets,
+} from "./chapter2-book-data";
+import {
+  chapter3BookSections,
+  chapter3StudyCardTargets,
+  chapter3SummaryTargets,
+} from "./chapter3-book-data";
+import {
+  chapter4BookSections,
+  chapter4StudyCardTargets,
+  chapter4SummaryTargets,
+} from "./chapter4-book-data";
+
 export interface BookSection {
   id: string;
   chapterId: number;
@@ -11,9 +32,26 @@ export interface BookTarget {
   anchorId?: string;
 }
 
-const bookSections: BookSection[] = [];
-const studyCardTargets: Record<string, BookTarget> = {};
-const summaryTargets: Record<string, BookTarget> = {};
+const bookSections: BookSection[] = [
+  ...chapter1BookSections,
+  ...chapter2BookSections,
+  ...chapter3BookSections,
+  ...chapter4BookSections,
+];
+
+const studyCardTargets: Record<string, BookTarget> = {
+  ...chapter1StudyCardTargets,
+  ...chapter2StudyCardTargets,
+  ...chapter3StudyCardTargets,
+  ...chapter4StudyCardTargets,
+};
+
+const summaryTargets: Record<string, BookTarget> = {
+  ...chapter1SummaryTargets,
+  ...chapter2SummaryTargets,
+  ...chapter3SummaryTargets,
+  ...chapter4SummaryTargets,
+};
 
 export function getBookSectionsByChapter(chapterId: number): BookSection[] {
   return bookSections

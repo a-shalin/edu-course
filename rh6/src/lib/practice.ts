@@ -1,3 +1,9 @@
+import { chapter1Seeds } from "./chapter1-practice";
+import { chapter2Seeds } from "./chapter2-practice";
+import { chapter3Seeds } from "./chapter3-practice";
+import { chapter4Seeds } from "./chapter4-practice";
+import { buildPracticeItems } from "./practice-builders";
+
 export type MarkedText = {
   text: string;
   generated?: boolean;
@@ -108,7 +114,12 @@ export type PracticeItem = {
   parts: PracticePart[];
 };
 
-const practiceItems: PracticeItem[] = [];
+const practiceItems: PracticeItem[] = buildPracticeItems([
+  ...chapter1Seeds,
+  ...chapter2Seeds,
+  ...chapter3Seeds,
+  ...chapter4Seeds,
+]);
 
 export function isScorablePracticePart(part: PracticePart): part is Extract<
   PracticePart,
