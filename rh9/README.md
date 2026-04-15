@@ -15,6 +15,7 @@ From the repo root you can use the wrapper commands:
 npm run dev
 npm run lint
 npm run e2e
+npm run deploy
 ```
 
 ## Docker
@@ -32,16 +33,33 @@ The production container must include `books/` because the in-app textbook reade
 - `docker/`: Docker image and Compose template for the `rh9.ashalin.net` app stack
 - `ansible/`: Ansible inventory example and playbook for deploying RH9 behind the shared Traefik edge
 
+Create the real inventory files from the examples first:
+
+```bash
+cp ops/ansible/inventory/production.ini.example ops/ansible/inventory/production.ini
+cp rh9/ansible/inventory/production.ini.example rh9/ansible/inventory/production.ini
+```
+
 Deploy the shared edge first from repo root:
 
 ```bash
-cd ops/ansible
-ansible-playbook playbooks/deploy-edge.yml
+npm run deploy:edge
 ```
 
 Then deploy RH9:
 
 ```bash
-cd rh9/ansible
-ansible-playbook playbooks/deploy.yml
+npm run deploy
+```
+
+From `rh9/` itself you can also run:
+
+```bash
+npm run deploy
+```
+
+Extra `ansible-playbook` arguments can be passed through the script directly, for example:
+
+```bash
+bash ../scripts/deploy.sh rh9 --limit rh9_server
 ```
