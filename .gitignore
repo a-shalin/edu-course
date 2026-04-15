@@ -5,5 +5,8 @@
 npm-debug.log*
 ops/edge/.env
 ops/edge/letsencrypt/
+
+# local ansible inventories
 ops/ansible/inventory/production.ini
 rh9/ansible/inventory/production.ini
+rh6/ansible/inventory/production.ini

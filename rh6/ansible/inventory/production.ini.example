@@ -1,0 +1,7 @@
+[webservers]
+rh6_server ansible_host=example.invalid ansible_user=replace_me
+
+[webservers:vars]
+domain_name=rh6.example.invalid
+app_name=rh6
+app_port=3000

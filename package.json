@@ -10,7 +10,15 @@
     "check": "cd rh9 && npm run check",
     "dev:rh9": "cd rh9 && npm run dev",
     "build:rh9": "cd rh9 && npm run build",
+    "start:rh9": "cd rh9 && npm run start",
     "lint:rh9": "cd rh9 && npm run lint",
-    "e2e:rh9": "cd rh9 && npm run e2e"
+    "e2e:rh9": "cd rh9 && npm run e2e",
+    "check:rh9": "cd rh9 && npm run check",
+    "dev:rh6": "cd rh6 && npm run dev",
+    "build:rh6": "cd rh6 && npm run build",
+    "start:rh6": "cd rh6 && npm run start",
+    "lint:rh6": "cd rh6 && npm run lint",
+    "e2e:rh6": "cd rh6 && npm run e2e",
+    "check:rh6": "cd rh6 && npm run check"
   }
 }
