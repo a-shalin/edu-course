@@ -32,24 +32,33 @@ export const chapter2BookSections: BookSection[] = [
   {
     id: "c2-b5",
     chapterId: 2,
-    title: "§ 19-20. Культура и быт в IX — начале XIII в.",
+    title: "§ 19-20. Культура и быт в IX — начало XIII в.",
     sortKey: 240,
     sourcePath: "books/russian-history/part-1/15.php.html",
   },
 ];
 
+const summaryTargetsFor = (targets: Record<string, BookTarget>): Record<string, BookTarget> =>
+  Object.fromEntries(
+    Object.entries(targets).map(([cardId, target]) => [`${cardId}-summary`, target])
+  );
+
 export const chapter2StudyCardTargets: Record<string, BookTarget> = {
-  "c2-s1": { sectionId: "c2-b2", anchorId: "c2-yuri-moscow" },
-  "c2-s2": { sectionId: "c2-b5", anchorId: "c2-igor-word" },
-  "c2-s3": { sectionId: "c2-b1", anchorId: "c2-fragmentation" },
-  "c2-s4": { sectionId: "c2-b2", anchorId: "c2-yuri-moscow" },
-  "c2-s5": { sectionId: "c2-b2", anchorId: "c2-andrei" },
-  "c2-s6": { sectionId: "c2-b3", anchorId: "c2-novgorod-government" },
-  "c2-s7": { sectionId: "c2-b4", anchorId: "c2-galicia" },
-  "c2-s8": { sectionId: "c2-b5", anchorId: "c2-novgorod-architecture" },
+  "c2-f1": { sectionId: "c2-b1" },
+  "c2-f2": { sectionId: "c2-b1" },
+  "c2-f3": { sectionId: "c2-b2" },
+  "c2-f4": { sectionId: "c2-b3" },
+  "c2-f5": { sectionId: "c2-b3" },
+  "c2-f6": { sectionId: "c2-b2" },
+  "c2-f7": { sectionId: "c2-b2" },
+  "c2-f8": { sectionId: "c2-b2" },
+  "c2-f9": { sectionId: "c2-b4" },
+  "c2-f10": { sectionId: "c2-b4" },
+  "c2-f11": { sectionId: "c2-b4" },
+  "c2-f12": { sectionId: "c2-b4" },
+  "c2-f13": { sectionId: "c4-b2" },
 };
 
-export const chapter2SummaryTargets: Record<string, BookTarget> = {
-  "c2-t1": { sectionId: "c2-b2", anchorId: "c2-yuri-moscow" },
-  "c2-t2": { sectionId: "c2-b5", anchorId: "c2-igor-word" },
-};
+export const chapter2SummaryTargets: Record<string, BookTarget> = summaryTargetsFor(
+  chapter2StudyCardTargets
+);

@@ -10,6 +10,10 @@ async function closeReaderIfOpen(page: Page) {
 }
 
 async function answerCurrentQuestion(page: Page) {
+  if (await page.getByTestId("practice-open-book").isVisible().catch(() => false)) {
+    return;
+  }
+
   const session = page.getByTestId("practice-session");
   const multiSelect = session.getByTestId("practice-multi-select");
   const singleChoice = session.getByTestId("practice-single-choice");
@@ -91,7 +95,7 @@ test.describe("RH6 course flow", () => {
 
     await closeReaderIfOpen(page);
 
-    await page.locator('[data-testid="study-card-c1-s8"]').click();
+    await page.locator('[data-testid="study-card-c1-f36"]').click();
     await expect(page.getByTestId("book-reader")).toBeVisible();
     await expect(page.getByTestId("book-reader-frame")).toBeVisible();
   });
@@ -119,7 +123,7 @@ test.describe("RH6 course flow", () => {
     });
     await page.goto("/chapter/4");
 
-    await page.getByTestId("study-card-c4-s11").click();
+    await page.getByTestId("study-card-c4-f11").click();
     await expect(page.getByTestId("book-reader")).toBeVisible();
     await expect(page.getByTestId("book-reader-frame")).toHaveAttribute(
       "src",
@@ -134,7 +138,9 @@ test.describe("RH6 course flow", () => {
     });
     await page.goto("/chapter/4");
 
-    await advanceToQuestionWithTitle(page, ["Судебник Ивана III"]);
+    await advanceToQuestionWithTitle(page, [
+      "Первый общерусский свод законов, принятый в 1497...",
+    ]);
     await answerCurrentQuestion(page);
     await expect(page.getByTestId("practice-open-book")).toBeVisible();
     await page.getByTestId("practice-open-book").click();

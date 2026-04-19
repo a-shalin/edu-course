@@ -76,6 +76,10 @@ export const chooseN = (
 });
 
 const sourceLabelFor = (item: PracticeSeed): string => {
+  if (item.controlWork === 0) {
+    return `Итоговый тест, вариант ${item.variant}, задание ${item.exerciseNumber}`;
+  }
+
   const base = `Контрольная работа № ${item.controlWork}, вариант ${item.variant}, задание ${item.exerciseNumber}`;
   return item.fragmentKey ? `${base}${item.fragmentKey}` : base;
 };
