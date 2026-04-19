@@ -226,6 +226,10 @@ const sourceLabelFor = (item: PracticeSeed): string => {
   return item.fragmentKey ? `${base}${item.fragmentKey}` : base;
 };
 
+const isAnalyzeTextPracticeSeed = (item: PracticeSeed): boolean =>
+  // In the RH9 control-work structure, exercise 3 is the source-text analysis task.
+  item.exerciseNumber === 3;
+
 const map181314Blocks: PracticeBlock[] = [
   heading("Рассмотрите карту и выполните задания 11-13."),
   image(
@@ -3565,13 +3569,13 @@ const practiceItems: PracticeItem[] = [
   ...chapter3Seeds,
   ...chapter4Seeds,
   ...chapter5Seeds,
-].map(
-  (item, index) => ({
+]
+  .filter((item) => !isAnalyzeTextPracticeSeed(item))
+  .map((item, index) => ({
     ...item,
     sourceOrder: index + 1,
     sourceLabel: sourceLabelFor(item),
-  })
-);
+  }));
 
 export function getPracticeItemsByChapter(chapterId: number): PracticeItem[] {
   return practiceItems
