@@ -16,6 +16,14 @@ http:
       tls:
         certResolver: letsencrypt
 
+    rh6:
+      rule: Host(`rh6.ashalin.net`)
+      entryPoints:
+        - websecure
+      service: rh6
+      tls:
+        certResolver: letsencrypt
+
   services:
     buddilive:
       loadBalancer:
@@ -26,3 +34,8 @@ http:
       loadBalancer:
         servers:
           - url: http://rh9-app:3000
+
+    rh6:
+      loadBalancer:
+        servers:
+          - url: http://rh6-app:3000

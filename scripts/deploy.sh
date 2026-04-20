@@ -11,6 +11,11 @@ if [[ $# -gt 0 ]]; then
 fi
 
 case "${target}" in
+  rh6)
+    ansible_dir="${repo_root}/rh6/ansible"
+    playbook="playbooks/deploy.yml"
+    example_inventory="${ansible_dir}/inventory/production.ini.example"
+    ;;
   rh9)
     ansible_dir="${repo_root}/rh9/ansible"
     playbook="playbooks/deploy.yml"
@@ -23,7 +28,7 @@ case "${target}" in
     ;;
   *)
     echo "Unknown deploy target: ${target}" >&2
-    echo "Usage: scripts/deploy.sh [rh9|edge] [additional ansible-playbook args...]" >&2
+    echo "Usage: scripts/deploy.sh [rh6|rh9|edge] [additional ansible-playbook args...]" >&2
     exit 1
     ;;
 esac

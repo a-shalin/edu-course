@@ -20,7 +20,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Как звали полководца, возглавившего западный поход монголов и вторгшегося на Русь?",
     options: choices("Чингисхан", "Угедей", "Батый", "Мамай"),
     correctAnswer: "3",
-    explanation: "Правильный ответ: Батый. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Батый.",
   }),
   finalMcq({
     id: "c3-ft-v1-q18",
@@ -31,7 +31,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Какое сражение положило конец продвижению крестоносцев на восток и вошло в историю как День воинской славы России?",
     options: choices("Невская битва", "Ледовое побоище", "битва на реке Воже", "битва на реке Калке"),
     correctAnswer: "2",
-    explanation: "Правильный ответ: Ледовое побоище. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Ледовое побоище.",
   }),
   finalMatching({
     id: "c3-ft-v1-q21",
@@ -46,7 +46,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     ],
     generatedOptions: [choice("А", "А2 В1 Б4 Г3"), choice("Б", "Б4 А2 В1 Г3"), choice("В", "А2 Б4 В1 Г3"), choice("Г", "Г3 Б4 В1 А2")],
     correctAnswer: "В",
-    explanation: "Верное соответствие: А2 Б4 В1 Г3. Все пары указаны в опорных карточках.",
+    explanation: "Верное соответствие: А2 Б4 В1 Г3.",
   }),
   finalMatching({
     id: "c3-ft-v1-q22",
@@ -61,7 +61,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     ],
     generatedOptions: [choice("А", "Г1 Б4 В3 А2"), choice("Б", "Б4 А2 В3 Г1"), choice("В", "А2 В3 Б4 Г1"), choice("Г", "А2 Б4 В3 Г1")],
     correctAnswer: "Г",
-    explanation: "Верное соответствие: А2 Б4 В3 Г1. Все пары указаны в опорных карточках.",
+    explanation: "Верное соответствие: А2 Б4 В3 Г1.",
   }),
   finalMcq({
     id: "c3-ft-v2-q8",
@@ -72,7 +72,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Какой город стал столицей Золотой Орды при хане Батые?",
     options: choices("Сарай-Бату", "Новый Сарай", "Итиль", "Казань"),
     correctAnswer: "1",
-    explanation: "Правильный ответ: Сарай-Бату. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Сарай-Бату.",
   }),
   finalMcq({
     id: "c3-ft-v2-q10",
@@ -83,7 +83,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "В каком году произошла Невская битва?",
     options: choices("1223 г.", "1238 г.", "1240 г.", "1242 г."),
     correctAnswer: "3",
-    explanation: "Правильный ответ: 1240 г.. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: 1240 г..",
   }),
   finalMcq({
     id: "c3-ft-v2-q15",
@@ -94,7 +94,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Какое сражение произошло 8 сентября 1380 года?",
     options: choices("Ледовое побоище", "Битва на реке Воже", "Куликовская битва", "Стояние на реке Угре"),
     correctAnswer: "3",
-    explanation: "Правильный ответ: Куликовская битва. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Куликовская битва.",
   }),
   finalMcq({
     id: "c3-ft-v2-q16",
@@ -105,7 +105,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Как в Золотой Орде называли чиновников, которые вели контроль за сбором дани на Руси?",
     options: choices("Баскаки", "Нойоны", "Темники", "Бесермены"),
     correctAnswer: "1",
-    explanation: "Правильный ответ: Баскаки. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Баскаки.",
   }),
   finalTerm({
     id: "c3-ft-v2-q19",
@@ -118,7 +118,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     generatedOptions: [choice("А", "выход"), choice("Б", "замятня"), choice("В", "усобица"), choice("Г", "ярлык")],
     correctAnswer: "Б",
     prompt: "Какой ответ подходит?",
-    explanation: "Правильный ответ: Замятня. Опорная карточка даёт это понятие и его смысл.",
+    explanation: "Правильный ответ: Замятня.",
   }),
   finalMatching({
     id: "c3-ft-v2-q21",
@@ -133,7 +133,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     ],
     generatedOptions: [choice("А", "Г2 Б3 В1 А4"), choice("Б", "Б3 А4 В1 Г2"), choice("В", "А4 В1 Б3 Г2"), choice("Г", "А4 Б3 В1 Г2")],
     correctAnswer: "Г",
-    explanation: "Верное соответствие: А4 Б3 В1 Г2. Все пары указаны в опорных карточках.",
+    explanation: "Верное соответствие: А4 Б3 В1 Г2.",
   }),
   finalMatching({
     id: "c3-ft-v2-q22",
@@ -148,7 +148,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     ],
     generatedOptions: [choice("А", "А3 Б2 В4 Г1"), choice("Б", "Б2 А3 В4 Г1"), choice("В", "А3 В4 Б2 Г1"), choice("Г", "Г1 Б2 В4 А3")],
     correctAnswer: "А",
-    explanation: "Верное соответствие: А3 Б2 В4 Г1. Все пары указаны в опорных карточках.",
+    explanation: "Верное соответствие: А3 Б2 В4 Г1.",
   }),
   finalMcq({
     id: "c3-ft-v3-q8",
@@ -159,7 +159,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Какой город в 1238 году монголы прозвали «злым городом» за семинедельную оборону?",
     options: choices("Рязань", "Торжок", "Коломна", "Козельск"),
     correctAnswer: "4",
-    explanation: "Правильный ответ: Козельск. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Козельск.",
   }),
   finalMcq({
     id: "c3-ft-v3-q13",
@@ -170,7 +170,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Какое сражение 1378 года стало первой крупной победой русских войск над ордынцами?",
     options: choices("Битва на реке Пьяне", "Битва на реке Калке", "Битва на реке Сить", "Битва на реке Воже"),
     correctAnswer: "4",
-    explanation: "Правильный ответ: Битва на реке Воже. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Битва на реке Воже.",
   }),
   finalMcq({
     id: "c3-ft-v3-q14",
@@ -181,7 +181,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "В каком году произошло Стояние на реке Угре, окончательно освободившее Русь от ордынского владычества?",
     options: choices("1380 г.", "1382 г.", "1480 г.", "1497 г."),
     correctAnswer: "3",
-    explanation: "Правильный ответ: 1480 г.. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: 1480 г..",
   }),
   finalMatching({
     id: "c3-ft-v3-q22",
@@ -196,7 +196,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     ],
     generatedOptions: [choice("А", "Б2 А3 В4 Г1"), choice("Б", "А3 Б2 В4 Г1"), choice("В", "А3 В4 Б2 Г1"), choice("Г", "Г1 Б2 В4 А3")],
     correctAnswer: "Б",
-    explanation: "Верное соответствие: А3 Б2 В4 Г1. Все пары указаны в опорных карточках.",
+    explanation: "Верное соответствие: А3 Б2 В4 Г1.",
   }),
   finalMcq({
     id: "c3-ft-v4-q8",
@@ -207,7 +207,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Против кого был направлен поход князя Александра Невского, завершившийся Ледовым побоищем?",
     options: choices("Против шведов", "Против литовцев", "Против монголов", "Против немецких рыцарей-крестоносцев"),
     correctAnswer: "4",
-    explanation: "Правильный ответ: Против немецких рыцарей-крестоносцев. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Против немецких рыцарей-крестоносцев.",
   }),
   finalMcq({
     id: "c3-ft-v4-q14",
@@ -218,7 +218,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "В правление какого хана Золотая Орда достигла своего расцвета и приняла ислам в качестве государственной религии?",
     options: choices("Батыя", "Берке", "Узбека", "Мамая"),
     correctAnswer: "3",
-    explanation: "Правильный ответ: Узбека. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Узбека.",
   }),
   finalMcq({
     id: "c3-ft-v4-q15",
@@ -229,7 +229,7 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     question: "Как назывался титул правителя Монгольской империи, который принял Темучин в 1206 году?",
     options: choices("Каган", "Темник", "Султан", "Чингисхан"),
     correctAnswer: "4",
-    explanation: "Правильный ответ: Чингисхан. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Чингисхан.",
   }),
   finalSequence({
     id: "c3-ft-v4-q24",
@@ -241,6 +241,6 @@ export const chapter3Seeds: Chapter3PracticeSeed[] = [
     events: ["А) Битва на реке Калке", "Б) Взятие монголами Киева", "В) Гибель Рязани", "Г) Битва на реке Сити"],
     generatedOptions: [choice("А", "А - В - Г - Б"), choice("Б", "В - А - Г - Б"), choice("В", "Б - Г - В - А"), choice("Г", "В - Г - Б - А")],
     correctAnswer: "А",
-    explanation: "Верная последовательность: А - В - Г - Б. Даты этих событий указаны в опорных карточках.",
+    explanation: "Верная последовательность: А - В - Г - Б.",
   })
 ];

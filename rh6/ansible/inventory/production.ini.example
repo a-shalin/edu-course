@@ -1,7 +1,7 @@
 [webservers]
-rh6_server ansible_host=example.invalid ansible_user=replace_me
+rh6_server ansible_host=ora.cloudinfosys.ru ansible_user=ashalin
 
 [webservers:vars]
-domain_name=rh6.example.invalid
+domain_name=rh6.ashalin.net
 app_name=rh6
 app_port=3000

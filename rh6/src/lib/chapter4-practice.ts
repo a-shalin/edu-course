@@ -20,7 +20,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     events: ["А) Битва на реке Калке", "Б) Невская битва", "В) Куликовская битва", "Г) Стояние на реке Угре"],
     generatedOptions: [choice("А", "А - Б - В - Г"), choice("Б", "Б - А - В - Г"), choice("В", "Г - В - Б - А"), choice("Г", "Б - В - Г - А")],
     correctAnswer: "А",
-    explanation: "Верная последовательность: А - Б - В - Г. Даты этих событий указаны в опорных карточках.",
+    explanation: "Верная последовательность: А - Б - В - Г.",
   }),
   finalMcq({
     id: "c4-ft-v2-q17",
@@ -31,7 +31,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "В каком году было принято решение об автокефалии (независимости) Русской православной церкви?",
     options: choices("1380 г.", "1448 г.", "1480 г.", "1497 г."),
     correctAnswer: "2",
-    explanation: "Правильный ответ: 1448 г.. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: 1448 г..",
   }),
   finalMcq({
     id: "c4-ft-v2-q18",
@@ -42,7 +42,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Как называлась система содержания должностных лиц на Руси за счёт местного населения?",
     options: choices("Местничество", "Опричнина", "Кормление", "Откуп"),
     correctAnswer: "3",
-    explanation: "Правильный ответ: Кормление. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Кормление.",
   }),
   finalTerm({
     id: "c4-ft-v2-q20",
@@ -55,7 +55,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     generatedOptions: [choice("А", "крестово-купольный стиль"), choice("Б", "шатровый стиль"), choice("В", "барокко"), choice("Г", "романский стиль")],
     correctAnswer: "Б",
     prompt: "Какой ответ подходит?",
-    explanation: "Правильный ответ: Шатровый стиль. Опорная карточка даёт это понятие и его смысл.",
+    explanation: "Правильный ответ: Шатровый стиль.",
   }),
   finalSequence({
     id: "c4-ft-v2-q24",
@@ -67,7 +67,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     events: ["А) Церковь Вознесения в Коломенском", "Б) Софийский собор в Киеве", "В) Успенский собор во Владимире (при Андрее Боголюбском)", "Г) Успенский собор Московского Кремля (при Иване III)"],
     generatedOptions: [choice("А", "А - Г - В - Б"), choice("Б", "В - Б - Г - А"), choice("В", "Б - В - Г - А"), choice("Г", "В - Г - А - Б")],
     correctAnswer: "В",
-    explanation: "Верная последовательность: Б - В - Г - А. Даты этих событий указаны в опорных карточках.",
+    explanation: "Верная последовательность: Б - В - Г - А.",
   }),
   finalMcq({
     id: "c4-ft-v3-q12",
@@ -78,7 +78,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Какой из перечисленных городов не был присоединён к Москве при Иване III?",
     options: choices("Новгород", "Тверь", "Смоленск", "Ярославль"),
     correctAnswer: "3",
-    explanation: "Правильный ответ: Смоленск. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Смоленск.",
   }),
   finalMcq({
     id: "c4-ft-v3-q15",
@@ -89,7 +89,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Как назывался первый общерусский свод законов, принятый в 1497 году?",
     options: choices("Русская Правда", "Судебник Ивана III", "Устав Владимира", "Правда Ярославичей"),
     correctAnswer: "2",
-    explanation: "Правильный ответ: Судебник Ивана III. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Судебник Ивана III.",
   }),
   finalMcq({
     id: "c4-ft-v3-q16",
@@ -100,7 +100,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Как назывался срок, в течение которого крестьянам разрешалось переходить от одного владельца к другому по Судебнику 1497 года?",
     options: choices("Юрьев день", "Ильин день", "Покров день", "Семёнов день"),
     correctAnswer: "1",
-    explanation: "Правильный ответ: Юрьев день. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Юрьев день.",
   }),
   finalMcq({
     id: "c4-ft-v3-q17",
@@ -111,7 +111,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Какое из перечисленных ханств выделилось из Золотой Орды в XV веке?",
     options: choices("Аварский каганат", "Крымское ханство", "Тюркский каганат", "Хазарский каганат"),
     correctAnswer: "2",
-    explanation: "Правильный ответ: Крымское ханство. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Крымское ханство.",
   }),
   finalMcq({
     id: "c4-ft-v3-q18",
@@ -122,7 +122,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Как называлась система распределения должностей в Московском государстве в зависимости от знатности происхождения?",
     options: choices("Земщина", "Опричнина", "Кормление", "Местничество"),
     correctAnswer: "4",
-    explanation: "Правильный ответ: Местничество. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Местничество.",
   }),
   finalTerm({
     id: "c4-ft-v3-q19",
@@ -135,7 +135,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     generatedOptions: [choice("А", "дети боярские"), choice("Б", "служилые татары"), choice("В", "посадские люди"), choice("Г", "рядовичи")],
     correctAnswer: "А",
     prompt: "Какой ответ подходит?",
-    explanation: "Правильный ответ: Дети боярские. Опорная карточка даёт это понятие и его смысл.",
+    explanation: "Правильный ответ: Дети боярские.",
   }),
   finalTerm({
     id: "c4-ft-v3-q20",
@@ -148,7 +148,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     generatedOptions: [choice("А", "собирание"), choice("Б", "кормление"), choice("В", "местничество"), choice("Г", "удел")],
     correctAnswer: "А",
     prompt: "Какой ответ подходит?",
-    explanation: "Правильный ответ: Собирание. Опорная карточка даёт это понятие и его смысл.",
+    explanation: "Правильный ответ: Собирание.",
   }),
   finalSequence({
     id: "c4-ft-v3-q24",
@@ -160,7 +160,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     events: ["А) Присоединение Твери", "Б) Присоединение Новгорода", "В) Присоединение Смоленска (при Василии III)", "Г) Присоединение Ярославского княжества"],
     generatedOptions: [choice("А", "Б - А - В - Г"), choice("Б", "Б - Г - А - В"), choice("В", "В - А - Б - Г"), choice("Г", "Г - Б - А - В")],
     correctAnswer: "Г",
-    explanation: "Верная последовательность: Г - Б - А - В. Даты этих событий указаны в опорных карточках.",
+    explanation: "Верная последовательность: Г - Б - А - В.",
   }),
   finalMcq({
     id: "c4-ft-v4-q16",
@@ -171,7 +171,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Какое сражение между московским князем и литовским войском произошло в 1514 году и закончилось присоединением Смоленска?",
     options: choices("Битва на реке Ведроши", "Битва под Оршей", "Битва на реке Ворскле", "Битва на реке Калке"),
     correctAnswer: "2",
-    explanation: "Правильный ответ: Битва под Оршей. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Битва под Оршей.",
   }),
   finalMcq({
     id: "c4-ft-v4-q17",
@@ -182,7 +182,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Как называлось религиозное течение, представители которого в конце XV века подвергали критике церковь и отказывались от почитания икон?",
     options: choices("Нестяжательство", "Иосифлянство", "Ересь", "Автокефалия"),
     correctAnswer: "3",
-    explanation: "Правильный ответ: Ересь. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Ересь.",
   }),
   finalMcq({
     id: "c4-ft-v4-q18",
@@ -193,7 +193,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     question: "Кто из итальянских зодчих руководил строительством нового Успенского собора в Московском Кремле?",
     options: choices("Марко Руффо", "Паоло де Боссо", "Антонио Солари", "Аристотель Фиораванти"),
     correctAnswer: "4",
-    explanation: "Правильный ответ: Аристотель Фиораванти. Этот факт есть в опорных карточках главы.",
+    explanation: "Правильный ответ: Аристотель Фиораванти.",
   }),
   finalTerm({
     id: "c4-ft-v4-q19",
@@ -206,7 +206,7 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     generatedOptions: [choice("А", "пожилое"), choice("Б", "выход"), choice("В", "оброк"), choice("Г", "кормление")],
     correctAnswer: "А",
     prompt: "Какой ответ подходит?",
-    explanation: "Правильный ответ: Пожилое. Опорная карточка даёт это понятие и его смысл.",
+    explanation: "Правильный ответ: Пожилое.",
   }),
   finalTerm({
     id: "c4-ft-v4-q20",
@@ -219,6 +219,6 @@ export const chapter4Seeds: Chapter4PracticeSeed[] = [
     generatedOptions: [choice("А", "Софья Палеолог"), choice("Б", "Елена Волошанка"), choice("В", "Анна Ярославна"), choice("Г", "Марфа Борецкая")],
     correctAnswer: "А",
     prompt: "Какой ответ подходит?",
-    explanation: "Правильный ответ: Софья Палеолог. Опорная карточка даёт это понятие и его смысл.",
+    explanation: "Правильный ответ: Софья Палеолог.",
   })
 ];

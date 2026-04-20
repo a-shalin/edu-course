@@ -9,6 +9,7 @@
     "e2e": "cd rh9 && npm run e2e",
     "check": "cd rh9 && npm run check",
     "deploy": "bash ./scripts/deploy.sh rh9",
+    "deploy:rh6": "bash ./scripts/deploy.sh rh6",
     "deploy:rh9": "bash ./scripts/deploy.sh rh9",
     "deploy:edge": "bash ./scripts/deploy.sh edge",
     "dev:rh9": "cd rh9 && npm run dev",

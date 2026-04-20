@@ -17,9 +17,79 @@ class AnchorInsertion:
 
 INSERTIONS: list[AnchorInsertion] = [
   AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-ancient-greeks",
+    "Многие города-государства на территории современной России основали древние греки ещё в эпоху Античности.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-derbent",
+    "Одним из древнейших городов нашей страны является Дербент",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-huns",
+    "Большинство же учёных считают началом Великого переселения вторую половину IV в.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-nagy",
+    "В 1799 г. в городе Надь-Сент-Мйклош",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-avars",
+    "Но вторжение в Европу аваров в середине VI в. явилось для них настоящим бедствием.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-great-bulgaria",
+    "4. Распад Великой Болгарии.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-volga-bulgaria",
+    "Другая часть болгар, или булгар (как часто называют их историки), ушла на север",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/2.php.html",
+    "c1-finnougrians",
+    "5. Финно-угры и балты.",
+  ),
+  AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
     "c1-slavs",
     "§ 2-3. Восточные славяне и их соседи",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
+    "c1-slavic-settlement",
+    "1. Заселение славянами Восточно-Европейской равнины.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
+    "c1-slavic-economy",
+    "2. Хозяйство восточных славян.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
+    "c1-slavic-society",
+    "3. Устройство общества.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
+    "c1-slavic-beliefs",
+    "4. Верования восточных славян.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
+    "c1-khazars",
+    "5. Восточные славяне и хазары.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/3.php.html",
+    "c1-varangians",
+    "6. Восточные славяне и варяги.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/4.php.html",
@@ -33,8 +103,18 @@ INSERTIONS: list[AnchorInsertion] = [
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/4.php.html",
+    "c1-poludie",
+    "3. Как Олег управлял государством.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/4.php.html",
     "c1-oleg-tsargrad",
     "4. Поход Олега на Царьград",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/5.php.html",
+    "c1-trade-money",
+    "2. Роль внешней торговли на Руси.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/5.php.html",
@@ -62,9 +142,24 @@ INSERTIONS: list[AnchorInsertion] = [
     "5. Крещение Руси.",
   ),
   AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/6.php.html",
+    "c1-tithe-church",
+    "Крещение дало мощный толчок развитию культуры.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/6.php.html",
+    "c1-vladimir-folklore",
+    "Князя-крестителя народ прославил в былинах.",
+  ),
+  AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/7.php.html",
     "c1-yaroslav",
     "§ 9. Расцвет Руси при Ярославе Мудром",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/7.php.html",
+    "c1-boris-gleb",
+    "Борис и Глеб погибли по приказу Святополка.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/7.php.html",
@@ -77,9 +172,29 @@ INSERTIONS: list[AnchorInsertion] = [
     "В начале XII в. монах Киево-Печерского монастыря Нестор включил её в свою «Повесть временных лет».",
   ),
   AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/7.php.html",
+    "c1-sofia-kiev",
+    "Величественный Софийский собор в Киеве",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/7.php.html",
+    "c1-ilarion",
+    "В 1051 г. главой Русской церкви стал священник княжеского храма Иларион",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/7.php.html",
+    "c1-yaroslav-pechenegs",
+    "В правление Ярослава на Русь не единожды нападали печенеги",
+  ),
+  AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/8.php.html",
     "c1-liubech",
     "3. Княжеские съезды.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/8.php.html",
+    "c1-votchina",
+    "1. Развитие Руси в 1054—1132 гг.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/8.php.html",
@@ -97,9 +212,19 @@ INSERTIONS: list[AnchorInsertion] = [
     "Он успокоил народ, приняв в 1113 г. Устав о резах и закупах, который дополнил Русскую Правду.",
   ),
   AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/9.php.html",
+    "c1-monomakh-teaching",
+    "Владимир Мономах прославился не только как успешный князь-воин, дипломат и правитель",
+  ),
+  AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/11.php.html",
     "c2-fragmentation",
     "1. Причины и особенности раздробленности",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/11.php.html",
+    "c2-fragmentation-results",
+    "2. Последствия раздробленности.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/12.php.html",
@@ -112,6 +237,16 @@ INSERTIONS: list[AnchorInsertion] = [
     "3. Княжение Андрея Боголюбского.",
   ),
   AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/12.php.html",
+    "c2-vladimir-cathedral",
+    "Успенский собор во Владимире, возведённый по указу Андрея Боголюбского",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/12.php.html",
+    "c2-vsevolod",
+    "4. Владимиро-Суздальская земля в конце XII — первой трети XIII в.",
+  ),
+  AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/13.php.html",
     "c2-novgorod-government",
     "4. Управление Новгородом.",
@@ -120,6 +255,16 @@ INSERTIONS: list[AnchorInsertion] = [
     "rh6/books/russian-history-6/books/russian-history/part-1/14.php.html",
     "c2-galicia",
     "4. Галицко-Волынская земля в начале XII в.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/14.php.html",
+    "c2-yaroslav-osmomysl",
+    "2. Княжение Ярослава Осмомысла в Галицкой земле.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/14.php.html",
+    "c2-daniil",
+    "Даниил отнял Галич у венгров.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/15.php.html",
@@ -147,6 +292,26 @@ INSERTIONS: list[AnchorInsertion] = [
     "3. Гибель Рязани.",
   ),
   AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/18.php.html",
+    "c3-batu-campaign",
+    "1. Завоевательные планы Чингисидов.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/18.php.html",
+    "c3-sit",
+    "В битве на реке Сити пали почти все русские воины",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/18.php.html",
+    "c3-kozelsk",
+    "5. Батый в Новгородской земле и «злой город» Козельск.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/18.php.html",
+    "c3-kiev-fall",
+    "6. Батый в Южной Руси и Центральной Европе.",
+  ),
+  AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/19.php.html",
     "c3-neva",
     "3. Невская битва.",
@@ -165,6 +330,11 @@ INSERTIONS: list[AnchorInsertion] = [
     "rh6/books/russian-history-6/books/russian-history/part-1/20.php.html",
     "c3-horde-rule",
     "4. Ордынское владычество на Руси.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/20.php.html",
+    "c3-census",
+    "Перепись населения проводили особые чиновники — численники.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/22.php.html",
@@ -218,6 +388,11 @@ INSERTIONS: list[AnchorInsertion] = [
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/26.php.html",
+    "c4-horde-fracture",
+    "3. Распад Золотой Орды.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/26.php.html",
     "c4-feudal-war",
     "4. Борьба московских князей за престол.",
   ),
@@ -253,6 +428,11 @@ INSERTIONS: list[AnchorInsertion] = [
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/28.php.html",
+    "c4-government",
+    "1. Система государственного управления.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/28.php.html",
     "c4-mestnichestvo",
     "2. Местничество и право.",
   ),
@@ -260,6 +440,16 @@ INSERTIONS: list[AnchorInsertion] = [
     "rh6/books/russian-history-6/books/russian-history/part-1/28.php.html",
     "c4-sudebnik",
     "К концу XV в. Русская Правда устарела.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/28.php.html",
+    "c4-service-people",
+    "Служилые людей «по отечеству» имели право владеть землёй с крестьянами и не платить налоги.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/28.php.html",
+    "c4-heresy",
+    "4. Церковь и государство.",
   ),
   AnchorInsertion(
     "rh6/books/russian-history-6/books/russian-history/part-1/29.php.html",
@@ -280,6 +470,21 @@ INSERTIONS: list[AnchorInsertion] = [
     "rh6/books/russian-history-6/books/russian-history/part-1/29.php.html",
     "c4-ryazan",
     "В 1521 г. Рязанское княжество вошло в состав Российского государства.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/30.php.html",
+    "c4-fioravanti",
+    "Строительство возглавил итальянский архитектор Аристотель Фиораванти.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/30.php.html",
+    "c4-shatry",
+    "В начале XVI в. возник новый стиль русского каменного зодчества — шатровый.",
+  ),
+  AnchorInsertion(
+    "rh6/books/russian-history-6/books/russian-history/part-1/30.php.html",
+    "c4-kolomenskoye",
+    "В 1532 г. был построен первый в России памятник шатрового зодчества",
   ),
 ]
 
