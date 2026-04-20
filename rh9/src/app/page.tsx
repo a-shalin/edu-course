@@ -133,7 +133,6 @@ export default function Home() {
         </div>
 
         <div className="rounded-[1.8rem] border border-border bg-card p-7 shadow-[0_20px_60px_rgba(59,37,26,0.08)]">
-          <div className="mb-3 text-xs uppercase tracking-[0.24em] text-muted">Следующий шаг</div>
           <h3 className="mb-4 font-serif text-2xl font-bold text-foreground">Повторение структуры</h3>
           <p className="text-sm leading-7 text-foreground/78">
             Следующие главы будут собираться по той же схеме: полный набор практических заданий,

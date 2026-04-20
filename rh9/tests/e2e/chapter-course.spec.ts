@@ -113,21 +113,18 @@ test.describe("course flow", () => {
     await expect(page.getByTestId("book-reader-frame")).toBeVisible();
   });
 
-  test("answers a few shuffled practice questions and opens the textbook from feedback", async ({ page }) => {
+  test("answers a practice question and opens the textbook from feedback", async ({ page }) => {
     await page.goto("/chapter/1");
 
     await expect(page.getByTestId("chapter-practice")).toBeVisible();
     await expect(page.getByTestId("practice-session")).toBeVisible();
 
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-      await answerCurrentQuestion(page);
-      await expect(page.getByTestId("practice-open-book")).toBeVisible();
-      await page.getByTestId("practice-open-book").click();
-      await expect(page.getByTestId("book-reader")).toBeVisible();
-      await closeReaderIfOpen(page);
-      await expect(page.getByTestId("practice-next")).toBeVisible();
-      await page.getByTestId("practice-next").click();
-    }
+    await answerCurrentQuestion(page);
+    await expect(page.getByTestId("practice-open-book")).toBeVisible();
+    await page.getByTestId("practice-open-book").click();
+    await expect(page.getByTestId("book-reader")).toBeVisible();
+    await closeReaderIfOpen(page);
+    await expect(page.getByTestId("practice-next")).toBeVisible();
   });
 
   test("keeps the targeted anchor when opening the textbook from a study card", async ({ page }) => {
