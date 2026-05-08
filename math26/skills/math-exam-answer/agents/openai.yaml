@@ -1,0 +1,4 @@
+interface:
+  display_name: "Math Exam Answer"
+  short_description: "Concise math exam answers from PDFs"
+  default_prompt: "Use $math-exam-answer to prepare a concise complete oral answer for a math analysis exam ticket."
