@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.8)  8 MAY 2026 21:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.8)  9 MAY 2026 12:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**answer_question_01.tex
-(./answer_question_01.tex
+**target/answer_question_01.tex
+(./target/answer_question_01.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -376,7 +376,7 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count278
 \l__pdf_internal_box=\box53
 )
-(./answer_question_01.aux)
+(target/answer_question_01.aux)
 \openout1 = `answer_question_01.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
@@ -432,12 +432,12 @@ LaTeX Info: Redefining \th on input line 19.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 <<ot1.cmap>>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 24.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 34.
 
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 24.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 34.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -446,29 +446,29 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
 LaTeX Font Info:    Trying to load font information for T2A+cmtt on input line 
-348.
+376.
 
 (/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
 File: t2acmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 ) [5]
-(./answer_question_01.aux)
+(target/answer_question_01.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4374 strings out of 475583
- 67321 string characters out of 5785560
- 1937975 words of memory out of 5000000
- 26361 multiletter control sequences out of 15000+600000
+ 4377 strings out of 475583
+ 67440 string characters out of 5785560
+ 1938975 words of memory out of 5000000
+ 26363 multiletter control sequences out of 15000+600000
  568746 words of font info for 62 fonts, out of 8000000 for 9000
  475 hyphenation exceptions out of 8191
- 57i,8n,65p,255b,204s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,8n,65p,262b,204s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/latt1200.600
 pk> </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/lati1200.60
-0pk> </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm1200.6
-00pk> </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/labx1200.
+0pk> </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/labx1200.6
+00pk> </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm1200.
 600pk> </home/ashalin/.texlive2023/texmf-var/fonts/pk/ljfour/lh/lh-t2a/labx1728
 .600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
@@ -479,9 +479,9 @@ dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/symbols/msbm10.pfb>
-Output written on answer_question_01.pdf (5 pages, 151225 bytes).
+Output written on target/answer_question_01.pdf (5 pages, 154353 bytes).
 PDF statistics:
- 253 PDF objects out of 1000 (max. 8388607)
+ 259 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  9 words of extra memory for PDF output out of 10000 (max. 10000000)

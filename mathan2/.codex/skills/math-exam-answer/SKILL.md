@@ -15,6 +15,7 @@ Use the project layout consistently:
 1. Identify the ticket.
    - If the user gives a number, read the matching item from `mathan2/source/exam_questions_sakbaev.tex`.
    - If the user gives text, use it directly and, when helpful, match it against the ticket list.
+   - Preserve the full ticket wording for the saved answer document header, but omit the leading ticket number because the top heading already contains it.
 
 2. Search the sources before answering.
    - Read `references/textbook-map.md` first to choose likely chapters and pages.
@@ -54,5 +55,7 @@ The script prints matching snippets with `pdf`, `page`, and score. Use it as a d
 Return the answer in Russian. Use Markdown and LaTeX math. Cite source locations compactly, for example: `Источник: IvGE_1.pdf, стр. 161--163`.
 
 When creating answer files, write them under `mathan2/target/`, for example `mathan2/target/answer_question_01.tex` and `mathan2/target/answer_question_01.pdf`.
+
+Saved answer documents must start with the top heading `Билет <номер>`, then the full ticket wording visually highlighted in normal font: use a framed block in saved `.tex`/`.pdf` output and a plain Markdown blockquote in Markdown output. Do not add a separate `Текст билета` heading and do not repeat the ticket number before the wording.
 
 If the user asks only for the answer, do not include a long research log. If source coverage is uncertain, state the gap briefly and give the best grounded answer.

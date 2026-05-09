@@ -11,6 +11,10 @@ If the answer is saved as files, place generated files under `mathan2/target/`.
 Use this structure unless the user requests another format:
 
 ```markdown
+# Билет <номер>
+
+> <Полный текст билета без сокращений, без начального номера билета>
+
 ## Краткий план
 ...
 
@@ -25,6 +29,21 @@ Use this structure unless the user requests another format:
 
 ## Финальная устная версия
 ...
+```
+
+Do not add a separate heading such as `Текст билета`. The ticket number belongs only in the top heading, formatted as `Билет <номер>`.
+
+When saving `.tex` or `.pdf` answer files, the document must begin with the top heading `Билет <номер>`, followed immediately by the full ticket wording in a framed normal-font block, before the answer sections. Preserve the wording from `mathan2/source/exam_questions_sakbaev.tex`, but omit the leading ticket number because it is already present in the heading. Do not replace the ticket wording with a shortened topic label.
+
+For saved TeX output, format the ticket wording as:
+
+```tex
+\noindent\fbox{%
+  \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+  \normalfont
+  <Полный текст билета без начального номера>
+  \end{minipage}%
+}
 ```
 
 For very short tickets, merge sections if that makes the answer clearer, but do not drop definitions, theorem statements, or proofs required by the ticket.
