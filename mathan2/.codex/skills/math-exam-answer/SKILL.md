@@ -1,6 +1,6 @@
 ---
 name: math-exam-answer
-description: In the math26 project, convert mathematical analysis exam tickets into concise complete oral answers using math26/source/exam_questions_sakbaev.tex and math26/source/IvGE_*.pdf. Use only for this math26 exam-answer workflow when the user asks to prepare, answer, summarize, or polish a ticket/bilet from this local math analysis program, especially when answers must include definitions, theorem statements, and proofs grounded in the local PDFs.
+description: In the mathan2 project, convert mathematical analysis exam tickets into concise complete oral answers using mathan2/source/exam_questions_sakbaev.tex and mathan2/source/IvGE_*.pdf. Use only for this mathan2 exam-answer workflow when the user asks to prepare, answer, summarize, or polish a ticket/bilet from this local math analysis program, especially when answers must include definitions, theorem statements, and proofs grounded in the local PDFs.
 ---
 
 # Math Exam Answer
@@ -8,12 +8,12 @@ description: In the math26 project, convert mathematical analysis exam tickets i
 ## Workflow
 
 Use the project layout consistently:
-- Read source PDFs and ticket files from `math26/source/`.
-- Put generated answer `.tex`, `.pdf`, `.aux`, `.log`, and related artifacts in `math26/target/`.
-- Do not write generated answers into the project root or `math26/source/`.
+- Read source PDFs and ticket files from `mathan2/source/`.
+- Put generated answer `.tex`, `.pdf`, `.aux`, `.log`, and related artifacts in `mathan2/target/`.
+- Do not write generated answers into the project root or `mathan2/source/`.
 
 1. Identify the ticket.
-   - If the user gives a number, read the matching item from `math26/source/exam_questions_sakbaev.tex`.
+   - If the user gives a number, read the matching item from `mathan2/source/exam_questions_sakbaev.tex`.
    - If the user gives text, use it directly and, when helpful, match it against the ticket list.
 
 2. Search the sources before answering.
@@ -40,7 +40,7 @@ Use the project layout consistently:
 
 ## Search Tool
 
-Run from the project root (`math26/`):
+Run from the project root (`mathan2/`):
 
 ```bash
 python3 .codex/skills/math-exam-answer/scripts/search_sources.py --ticket <номер> --top 8
@@ -53,6 +53,6 @@ The script prints matching snippets with `pdf`, `page`, and score. Use it as a d
 
 Return the answer in Russian. Use Markdown and LaTeX math. Cite source locations compactly, for example: `Источник: IvGE_1.pdf, стр. 161--163`.
 
-When creating answer files, write them under `math26/target/`, for example `math26/target/answer_question_01.tex` and `math26/target/answer_question_01.pdf`.
+When creating answer files, write them under `mathan2/target/`, for example `mathan2/target/answer_question_01.tex` and `mathan2/target/answer_question_01.pdf`.
 
 If the user asks only for the answer, do not include a long research log. If source coverage is uncertain, state the gap briefly and give the best grounded answer.

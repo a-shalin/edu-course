@@ -217,7 +217,7 @@ def discover_pdfs(paths: list[Path]) -> list[PdfSource]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Search math26/source/IvGE_1.pdf and math26/source/IvGE_2.pdf for exam-answer passages."
+        description="Search mathan2/source/IvGE_1.pdf and mathan2/source/IvGE_2.pdf for exam-answer passages."
     )
     parser.add_argument("query", nargs="*", help="Free-form search query.")
     parser.add_argument("--ticket", type=int, help="Ticket number from exam_questions_sakbaev.tex.")
