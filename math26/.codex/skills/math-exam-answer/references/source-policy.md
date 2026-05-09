@@ -2,12 +2,15 @@
 
 ## Primary Sources
 
-Use both textbook PDFs in the project root:
+Use both textbook PDFs in the math26 source directory:
 
-- `IvGE_1.pdf`: Иванов, «Лекции по математическому анализу», часть 1.
-- `IvGE_2.pdf`: Иванов, «Лекции по математическому анализу», часть 2.
+- `math26/source/IvGE_1.pdf`: Иванов, «Лекции по математическому анализу», часть 1.
+- `math26/source/IvGE_2.pdf`: Иванов, «Лекции по математическому анализу», часть 2.
 
-Use `exam_questions_sakbaev.tex` as the default ticket list.
+Use `math26/source/exam_questions_sakbaev.tex` as the default ticket list.
+
+Generated answers and build artifacts belong under `math26/target/`.
+Do not place generated `.tex`, `.pdf`, `.aux`, `.log`, or similar answer files in `math26/source/`.
 
 ## Source Rules
 

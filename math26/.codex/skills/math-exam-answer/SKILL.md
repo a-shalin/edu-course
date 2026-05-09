@@ -1,14 +1,19 @@
 ---
 name: math-exam-answer
-description: Convert mathematical analysis exam tickets into concise complete oral answers using the local ticket list and Ivanov textbook PDFs. Use when the user asks to prepare, answer, summarize, or polish any exam question/bilet from this math analysis program, especially when answers must include definitions, theorem statements, and proofs grounded in the local PDFs.
+description: In the math26 project, convert mathematical analysis exam tickets into concise complete oral answers using math26/source/exam_questions_sakbaev.tex and math26/source/IvGE_*.pdf. Use only for this math26 exam-answer workflow when the user asks to prepare, answer, summarize, or polish a ticket/bilet from this local math analysis program, especially when answers must include definitions, theorem statements, and proofs grounded in the local PDFs.
 ---
 
 # Math Exam Answer
 
 ## Workflow
 
+Use the project layout consistently:
+- Read source PDFs and ticket files from `math26/source/`.
+- Put generated answer `.tex`, `.pdf`, `.aux`, `.log`, and related artifacts in `math26/target/`.
+- Do not write generated answers into the project root or `math26/source/`.
+
 1. Identify the ticket.
-   - If the user gives a number, read the matching item from `exam_questions_sakbaev.tex`.
+   - If the user gives a number, read the matching item from `math26/source/exam_questions_sakbaev.tex`.
    - If the user gives text, use it directly and, when helpful, match it against the ticket list.
 
 2. Search the sources before answering.
@@ -35,11 +40,11 @@ description: Convert mathematical analysis exam tickets into concise complete or
 
 ## Search Tool
 
-Run from the project root:
+Run from the project root (`math26/`):
 
 ```bash
-python3 skills/math-exam-answer/scripts/search_sources.py --ticket <номер> --top 8
-python3 skills/math-exam-answer/scripts/search_sources.py "экстремум функция нескольких переменных" --top 8
+python3 .codex/skills/math-exam-answer/scripts/search_sources.py --ticket <номер> --top 8
+python3 .codex/skills/math-exam-answer/scripts/search_sources.py "экстремум функция нескольких переменных" --top 8
 ```
 
 The script prints matching snippets with `pdf`, `page`, and score. Use it as a discovery aid, then inspect adjacent pages with `pdftotext` when a proof spans multiple pages.
@@ -47,5 +52,7 @@ The script prints matching snippets with `pdf`, `page`, and score. Use it as a d
 ## Output Contract
 
 Return the answer in Russian. Use Markdown and LaTeX math. Cite source locations compactly, for example: `Источник: IvGE_1.pdf, стр. 161--163`.
+
+When creating answer files, write them under `math26/target/`, for example `math26/target/answer_question_01.tex` and `math26/target/answer_question_01.pdf`.
 
 If the user asks only for the answer, do not include a long research log. If source coverage is uncertain, state the gap briefly and give the best grounded answer.

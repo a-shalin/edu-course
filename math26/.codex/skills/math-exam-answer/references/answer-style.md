@@ -4,6 +4,8 @@
 
 Produce an oral-exam answer that is maximally short, but mathematically complete for the ticket.
 
+If the answer is saved as files, place generated files under `math26/target/`.
+
 ## Required Structure
 
 Use this structure unless the user requests another format:

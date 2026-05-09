@@ -14,9 +14,10 @@ from pathlib import Path
 
 
 SCRIPT = Path(__file__).resolve()
-PROJECT_ROOT = SCRIPT.parents[3]
-DEFAULT_TICKETS = PROJECT_ROOT / "exam_questions_sakbaev.tex"
-DEFAULT_PDFS = [PROJECT_ROOT / "IvGE_1.pdf", PROJECT_ROOT / "IvGE_2.pdf"]
+PROJECT_ROOT = SCRIPT.parents[4]
+SOURCE_ROOT = PROJECT_ROOT / "source"
+DEFAULT_TICKETS = SOURCE_ROOT / "exam_questions_sakbaev.tex"
+DEFAULT_PDFS = [SOURCE_ROOT / "IvGE_1.pdf", SOURCE_ROOT / "IvGE_2.pdf"]
 
 WORD_RE = re.compile(r"[A-Za-zА-Яа-яЁё0-9]+")
 STOP_WORDS = {
@@ -216,7 +217,7 @@ def discover_pdfs(paths: list[Path]) -> list[PdfSource]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Search IvGE_1.pdf and IvGE_2.pdf for exam-answer source passages."
+        description="Search math26/source/IvGE_1.pdf and math26/source/IvGE_2.pdf for exam-answer passages."
     )
     parser.add_argument("query", nargs="*", help="Free-form search query.")
     parser.add_argument("--ticket", type=int, help="Ticket number from exam_questions_sakbaev.tex.")
